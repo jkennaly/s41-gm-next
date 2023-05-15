@@ -2,8 +2,8 @@ import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '../auth/auth';
-import { useSelector, useDispatch } from 'react-redux';
-import { setUser, selectUser } from '@/store/reducers/auth';
+import { useSelector } from 'react-redux';
+import { selectUser } from '@/store/reducers/auth';
 
 const user = {
   name: 'Tom Cook',
@@ -29,24 +29,11 @@ export default function Example() {
   const user = useSelector(selectUser) || {};
   const [authId, setAuthId] = useState(0)
   const auth = useAuth();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const query = window.location.search.substring(1);
-    if(query) {
-      auth.handleAuthentication()
-        .then(user => {
-          console.log('handleAuthentication', user)
-          window.location.href = '/'
-          dispatch(setUser(user));
-        })
-    } 
-  }, [window.location.search])
   useEffect(() => {
     setAuthId(auth.userId())
   }, [user])
 
-  console.log('AppShell', authId, user)
   return (
     <>
       <div className="min-h-full relative z-50 top-0">

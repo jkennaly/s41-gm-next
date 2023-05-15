@@ -28,6 +28,9 @@ export default function AuthProvider({ children, authData, apiUrl }) {
         </AuthContext.Provider>
     );
 }
+export function apiAuth() {
+    return new Auth(AUTH_DATA, API_URL);
+}
 
 export function useAuth() {
     const context = useContext(AuthContext);

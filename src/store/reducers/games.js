@@ -2,11 +2,8 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  FETCH_GAMES_SUCCESS,
-  FETCH_GAMES_FAILURE,
-  ADD_GAME_SUCCESS,
-  ADD_GAME_FAILURE,
-} from '../actions/games';
+  fetchModels, fetchModelData, addModel, fetchAssocData 
+} from '../actions/models';
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
@@ -20,20 +17,63 @@ const gamesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(FETCH_GAMES_SUCCESS, (state, action) => {
-        state.games = action.payload;
+    .addCase(fetchAssocData.fulfilled, (state, action) => {
+      if(action.meta.arg === 'games'){
+        const games = state.games.games.map((game) => {
+          if(game.id === action.payload.id){
+            console.log('fetch game success', action.payload);
+            return action.payload;
+          }
+          return game;
+        });
+        state.games.games = games;
         state.error = null;
-      })
-      .addCase(FETCH_GAMES_FAILURE, (state, action) => {
-        state.games = [];
+      }
+    })
+      .addCase(fetchAssocData.rejected, (state, action) => {
+        if(action.meta.arg === 'games'){
         state.error = action.payload;
+      }
       })
-      .addCase(ADD_GAME_SUCCESS, (state, action) => {
+      .addCase(fetchModelData.fulfilled, (state, action) => {
+        if(action.meta.arg === 'games'){
+          const games = state.games.games.map((game) => {
+            if(game.id === action.payload.id){
+              return action.payload;
+            }
+            return game;
+          });
+          state.games.games = games;
+          state.error = null;
+        }
+      })
+        .addCase(fetchModelData.rejected, (state, action) => {
+          if(action.meta.arg === 'games'){
+          state.error = action.payload;
+        }
+        })
+      .addCase(fetchModels.fulfilled, (state, action) => {
+        if(action.meta.arg === 'games'){
+          state.games = action.payload;
+          state.error = null;
+        }
+      })
+        .addCase(fetchModels.rejected, (state, action) => {
+          if(action.meta.arg === 'games'){
+          state.games = [];
+          state.error = action.payload;
+        }
+        })
+      .addCase(addModel.fulfilled, (state, action) => {
+        if(action.meta.arg === 'games'){
         state.games.push(action.payload);
         state.error = null;
+      }
       })
-      .addCase(ADD_GAME_FAILURE, (state, action) => {
+      .addCase(addModel.rejected, (state, action) => {
+        if(action.meta.arg === 'games'){
         state.error = action.payload;
+      }
       })
       .addCase(HYDRATE, (state, action) => {
         return {

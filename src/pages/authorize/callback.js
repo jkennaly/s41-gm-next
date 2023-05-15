@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import { setUser } from '@/store/reducers/auth';
+import { useDispatch } from 'react-redux';
 
 import AppShell from '@/components/AppShell'
 import { Footer } from '@/components/Footer'
@@ -10,6 +12,18 @@ import { Speakers } from '@/components/Speakers'
 import { Sponsors } from '@/components/Sponsors'
 
 export default function Home() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const query = window.location.search.substring(1);
+    if(query) {
+      auth.handleAuthentication()
+        .then(user => {
+          window.location.href = '/'
+          dispatch(setUser(user), 'users');
+        })
+    } 
+  }, [window.location.search, dispatch])
   return (
     <>
       <Head>
