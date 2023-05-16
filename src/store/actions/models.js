@@ -48,7 +48,6 @@ import { api } from '../../api';
         const response = await api.post(`/${modelName}`, modelData);
         return response.data;
       } catch (error) {
-        console.log(`addModel action error`, error);
         return rejectWithValue(error.response.data);
       }
     }

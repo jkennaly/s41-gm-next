@@ -18,20 +18,19 @@ const gamesSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(fetchAssocData.fulfilled, (state, action) => {
-      if(action.meta.arg === 'games'){
-        const games = state.games.games.map((game) => {
+      if(action.meta.arg.modelName === 'games'){
+        const games = state.games.length ? state.games.map((game) => {
           if(game.id === action.payload.id){
-            console.log('fetch game success', action.payload);
             return action.payload;
           }
           return game;
-        });
-        state.games.games = games;
+        }) : [action.payload];
+        state.games = games;
         state.error = null;
       }
     })
       .addCase(fetchAssocData.rejected, (state, action) => {
-        if(action.meta.arg === 'games'){
+        if(action.meta.arg.modelName === 'games'){
         state.error = action.payload;
       }
       })

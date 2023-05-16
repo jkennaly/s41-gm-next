@@ -14,6 +14,8 @@ export default function Document() {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=DM+Sans:wght@400;500;700&display=swap"
         />
+        <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+<link rel="icon" type="image/png" href="/assets/images/favicon.png" />
       </Head>
       <body className="h-full">
         <Main />

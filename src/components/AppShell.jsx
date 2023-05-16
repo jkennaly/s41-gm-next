@@ -4,6 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '../auth/auth';
 import { useSelector } from 'react-redux';
 import { selectUser } from '@/store/reducers/auth';
+import logo from '@/../public/S41.svg'
 
 const user = {
   name: 'Tom Cook',
@@ -46,7 +47,7 @@ export default function Example() {
                     <div className="flex-shrink-0">
                       <img
                         className="h-8 w-8"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        src={logo}
                         alt="Your Company"
                       />
                     </div>
