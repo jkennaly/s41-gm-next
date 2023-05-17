@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GameHeading from '../../components/lobby/GameHeading';
 import GameStats from '../../components/lobby/GameStats';
+import GameGMList from '../../components/gm/GameGMList';
 import ActivityTable from '../../components/lobby/ActivityTable';
 import { fetchAssocData } from '../../store/actions/models';
 import { selectGameData } from '../../store/selectors/games';
@@ -28,6 +29,7 @@ const GameDetail = () => {
   }, [dispatch, id]);
 
   if (!gameData) return <div>Loading...</div>; // Loading state
+  console.log('GameDetail gameData', gameData);
 
   return (
     <>
@@ -47,6 +49,7 @@ const GameDetail = () => {
         gameTitle={gameData.name}
       />
       <GameStats stats={Object.entries(gameData).filter(([name, value]) => !value || ['string', 'number'].includes(typeof value)).map(([name, value]) => ({name, value: value || ''}))} />
+      <GameGMList gmList={[gameData.gm]} />
       <ActivityTable activityItems={[]} />
     </div>
       </main>
