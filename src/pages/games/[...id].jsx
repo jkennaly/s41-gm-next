@@ -49,7 +49,7 @@ const GameDetail = () => {
         gameTitle={gameData.name}
       />
       <GameStats stats={Object.entries(gameData).filter(([name, value]) => !value || ['string', 'number'].includes(typeof value)).map(([name, value]) => ({name, value: value || ''}))} />
-      <GameGMList gmList={[gameData.gm]} />
+      {gameData.gm && <GameGMList gmList={[gameData.gm]} />}
       <ActivityTable activityItems={[]} />
     </div>
       </main>
