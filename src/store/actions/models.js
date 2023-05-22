@@ -29,6 +29,21 @@ import { api } from '../../api';
     }
   );
 
+  export const fetchModelDataArray = createAsyncThunk(
+    'model/fetchModelDataArray',
+    async ({ ids, modelName }, { rejectWithValue }) => {
+      try {
+        const validIds = ids.filter(Boolean);
+        if(!validIds.length) return [];
+        const response = await api.get(`/${modelName}/batch`, { params: { ids: validIds.join(',') }});
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  
+
   export const fetchAssocData = createAsyncThunk(
     `model/fetchAssocData`,
     async ({ id, modelName }, { rejectWithValue }) => {

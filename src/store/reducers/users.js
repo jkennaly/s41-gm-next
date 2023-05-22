@@ -2,7 +2,7 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  fetchModels, fetchModelData, fetchAssocData 
+  fetchModels, fetchModelData, fetchAssocData, fetchModelDataArray
 } from '../actions/models';
 import { updateSettings } from '../actions/settings';
 import { HYDRATE } from "next-redux-wrapper";
@@ -56,6 +56,12 @@ const usersSlice = createSlice({
       }
     })
     .addCase(fetchModels.fulfilled, (state, action) => {
+      if(action.meta.arg === 'users'){
+        state.users = action.payload;
+        state.error = null;
+      }
+    })
+    .addCase(fetchModelDataArray.fulfilled, (state, action) => {
       if(action.meta.arg === 'users'){
         state.users = action.payload;
         state.error = null;
