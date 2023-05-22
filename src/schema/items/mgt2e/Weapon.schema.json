@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "allOf": [
+      {
+        "$ref": "./CatalogItem.schema.json"
+      },
+      {
+        "properties": {
+          "damage": {
+            "type": "string",
+            "description": "The damage caused by the weapon."
+          },
+          "mass": {
+            "type": "number",
+            "description": "The mass or weight of the weapon."
+          },
+          "magazineSize": {
+            "type": "number",
+            "description": "The size of the weapon's magazine."
+          },
+          "magazineCurrent": {
+            "type": "number",
+            "description": "The current number of rounds in the weapon's magazine."
+          },
+          "range": {
+            "type": "string",
+            "description": "The range of the weapon."
+          },
+          "traits": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Traits or characteristics associated with the weapon."
+          }
+        },
+        "required": [
+          "damage",
+          "mass",
+          "magazineSize",
+          "magazineCurrent",
+          "range",
+          "traits"
+        ]
+      }
+    ]
+  }
+  

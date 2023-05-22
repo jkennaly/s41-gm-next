@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "scale": {
+        "type": "string",
+        "enum": ["game", "galactic", "sector", "subsector", "polity", "system", "planet", "station/vessel", "continent", "region", "city", "neighborhood"],
+        "description": "The scale of the catalog."
+      },
+      "storefronts": {
+        "type": "array",
+        "items": {
+          "$ref": "./Storefront.schema.json"
+        },
+        "description": "An array of storefronts that can be interacted with through this catalog."
+      },
+      "goods": {
+        "type": "array",
+        "items": {
+          "$ref": "./Goods.schema.json"
+        },
+        "description": "An array of potential goods that can be sold via this catalog."
+      }
+    },
+    "required": ["scale", "storefronts", "goods"]
+  }
+  

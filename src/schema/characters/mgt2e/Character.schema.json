@@ -1,0 +1,127 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "gameId": {
+        "type": "integer"
+      },
+      "sourceReference": {
+        "type": "object",
+        "description": "The reference to the source material or book where the character is described or detailed."
+      },
+      "history": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "description": "The history or backstory of the character."
+      },
+      "location": {
+        "type": "object",
+        "description": "The location or coordinates associated with the character."
+      },
+      "armor": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Armor"
+        },
+        "description": "The array of armor owned by the character."
+      },
+      "augmentations": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Augmentation"
+        },
+        "description": "The array of augmentations acquired by the character."
+      },
+      "coreCharacteristics": {
+        "$ref": "#/definitions/CoreCharacteristics",
+        "description": "The core characteristics of the character."
+      },
+      "equipment": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Equipment"
+        },
+        "description": "The array of equipment owned by the character."
+      },
+      "finances": {
+        "$ref": "#/definitions/Finances",
+        "description": "The finances and monetary information of the character."
+      },
+      "lifePaths": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/LifePath"
+        },
+        "description": "The array of life paths followed by the character."
+      },
+      "personalDataFile": {
+        "$ref": "#/definitions/PersonalDataFile",
+        "description": "The personal data file of the character."
+      },
+      "skills": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Skills"
+        },
+        "description": "The array of skills possessed by the character."
+      },
+      "weapons": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Weapons"
+        },
+        "description": "The array of weapons owned by the character."
+      }
+    },
+    "definitions": {
+      "Armor": {
+        "$ref": "Armor.schema.json"
+      },
+      "Augmentation": {
+        "$ref": "Augmentation.schema.json"
+      },
+      "CoreCharacteristics": {
+        "$ref": "CoreCharacteristics.schema.json"
+      },
+      "Equipment": {
+        "$ref": "Equipment.schema.json"
+      },
+      "Finances": {
+        "$ref": "Finances.schema.json"
+      },
+      "LifePath": {
+        "$ref": "LifePath.schema.json"
+      },
+      "PersonalDataFile": {
+        "$ref": "PersonalDataFile.schema.json"
+      },
+      "Skills": {
+        "$ref": "Skills.schema.json"
+      },
+      "Weapons": {
+        "$ref": "Weapons.schema.json"
+      }
+    },
+    "required": [
+      "id",
+      "gameId",
+      "sourceReference",
+      "history",
+      "location",
+      "armor",
+      "augmentations",
+      "coreCharacteristics",
+      "equipment",
+      "finances",
+      "lifePaths",
+      "personalDataFile",
+      "skills",
+      "weapons"
+    ]
+  }
+  

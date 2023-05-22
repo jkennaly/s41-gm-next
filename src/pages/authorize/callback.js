@@ -1,18 +1,16 @@
+import { useEffect } from 'react';
 import Head from 'next/head'
 import { setUser } from '@/store/reducers/auth';
 import { useDispatch } from 'react-redux';
+import { useAuth } from '@/auth/auth';
 
 import AppShell from '@/components/AppShell'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
-import { Hero } from '@/components/Hero'
-import { Newsletter } from '@/components/Newsletter'
-import { Schedule } from '@/components/Schedule'
-import { Speakers } from '@/components/Speakers'
-import { Sponsors } from '@/components/Sponsors'
 
 export default function Home() {
   const dispatch = useDispatch();
+  const auth = useAuth();
 
   useEffect(() => {
     const query = window.location.search.substring(1);
@@ -36,11 +34,6 @@ export default function Home() {
       <AppShell />
       <Header />
       <main>
-        <Hero />
-        <Speakers />
-        <Schedule />
-        <Sponsors />
-        <Newsletter />
       </main>
       <Footer />
     </>

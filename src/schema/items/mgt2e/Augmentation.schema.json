@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "allOf": [
+      {
+        "$ref": "./CatalogItem.schema.json"
+      },
+      {
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of augmentation, such as cybernetic, genetic, biological, or neural."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name or designation of the augmentation."
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the augmentation and its effects on the character."
+          },
+          "tl": {
+            "type": "number",
+            "description": "The tech level of the augmentation."
+          },
+          "cost": {
+            "type": "number",
+            "description": "The cost or value associated with obtaining or installing the augmentation."
+          },
+          "mass": {
+            "type": "number",
+            "description": "The mass or weight of the augmentation."
+          },
+          "effects": {
+            "type": "string",
+            "description": "The effects or abilities conferred by the augmentation."
+          },
+          "limitations": {
+            "type": "string",
+            "description": "Any limitations or drawbacks of the augmentation."
+          }
+        },
+        "required": ["type", "name", "description", "tl", "cost", "mass", "effects", "limitations"]
+      }
+    ]
+  }
+  

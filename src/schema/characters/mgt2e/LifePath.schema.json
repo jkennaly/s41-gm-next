@@ -1,0 +1,125 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "CareerTerms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "term": {
+              "type": "integer"
+            },
+            "finalAge": {
+              "type": "integer"
+            },
+            "finishingRank": {
+              "type": "string"
+            },
+            "howEntered": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "assignment": {
+              "type": "string"
+            },
+            "advanced": {
+              "type": "boolean"
+            },
+            "event": {
+              "type": "string"
+            },
+            "mishap": {
+              "type": "string"
+            },
+            "connections": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "associateGained": {
+              "type": "object"
+            },
+            "gainedCommission": {
+              "type": "boolean"
+            },
+            "skillsGained": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "bonusesGained": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "benefitsGained": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "agingEffects": {
+              "type": "object"
+            }
+          },
+          "required": ["term", "finalAge", "name"]
+        }
+      },
+      "PreCareerTerms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "term": {
+              "type": "integer"
+            },
+            "finalAge": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "graduated": {
+              "type": "boolean"
+            },
+            "event": {
+              "type": "string"
+            }
+          },
+          "required": ["term", "finalAge", "name"]
+        }
+      },
+      "MusteringOut": {
+        "type": "object",
+        "properties": {
+          "rollCount": {
+            "type": "integer"
+          },
+          "cashRolls": {
+            "type": "integer"
+          },
+          "cashModifier": {
+            "type": "integer"
+          },
+          "cashGained": {
+            "type": "integer"
+          },
+          "otherBenefitsGained": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": ["rollCount", "cashRolls", "cashModifier", "cashGained"]
+      }
+    },
+    "required": ["CareerTerms", "PreCareerTerms", "MusteringOut"]
+  }
+  

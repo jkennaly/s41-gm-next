@@ -1,0 +1,73 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "Name": {
+        "type": "string",
+        "description": "The name of the character."
+      },
+      "Species": {
+        "type": "string",
+        "description": "The species or race of the character."
+      },
+      "Traits": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Traits or characteristics of the character."
+      },
+      "Age": {
+        "type": "number",
+        "description": "The age of the character."
+      },
+      "Homeworld": {
+        "type": "string",
+        "description": "The homeworld or planet of the character."
+      },
+      "Title": {
+        "type": "string",
+        "description": "The title or honorific associated with the character."
+      },
+      "DistinguishingFeatures": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Distinguishing physical features of the character."
+      },
+      "CurrentPortrait": {
+        "type": "string",
+        "format": "uri",
+        "description": "The URL or path to the character's current portrait."
+      },
+      "PreviousPortraits": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "uri"
+        },
+        "description": "URLs or paths to the character's previous portraits."
+      },
+      "BackgroundNotes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Background notes or details about the character."
+      }
+    },
+    "required": [
+      "Name",
+      "Species",
+      "Traits",
+      "Age",
+      "Homeworld",
+      "Title",
+      "DistinguishingFeatures",
+      "CurrentPortrait",
+      "PreviousPortraits",
+      "BackgroundNotes"
+    ]
+  }
+  

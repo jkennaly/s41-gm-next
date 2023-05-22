@@ -1,81 +1,11 @@
 import React from 'react';
 import { IntegerInput, StringInput, DateTimeInput, SelectInput } from '../formInputs/FormInputs';
-import { addModel } from '../../store/actions';
+import { addModel } from '../../store/actions/models';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-const schema = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Games",
-    "description": "A JSON representation of the Games model.",
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "integer",
-        "minimum": 1,
-        "description": "The unique identifier for a game.",
-        "generator": "system"
-      },
-      "name": {
-        "type": "string",
-        "description": "The name of the game.",
-        "minLength": 1,
-        "generator": "user"
-      },
-      "status": {
-        "type": "string",
-        "description": "The status of the game.",
-        "enum": ["completed", "inProgress", "upcoming"],
-        "generator": "user"
-      },
-      "completedAt": {
-        "type": "string",
-        "format": "date-time",
-        "description": "The date and time when the game was completed.",
-        "generator": "system"
-      },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time",
-        "description": "The date and time when the game record was created.",
-        "generator": "system"
-      },
-      "updatedAt": {
-        "type": "string",
-        "format": "date-time",
-        "description": "The date and time when the game record was last updated.",
-        "generator": "system"
-      },
-      "maxPlayers": {
-        "type": "integer",
-        "description": "The maximum number of players allowed in the game.",
-        "minimum": 1,
-        "generator": "user"
-      },
-      "gameLength": {
-        "type": "integer",
-        "description": "The length of the game in minutes.",
-        "minimum": 1,
-        "generator": "user"
-      },
-      "gameType": {
-        "type": "string",
-        "description": "The type of the game.",
-        "minLength": 1,
-        "generator": "user"
-      }
-    },
-    "required": [
-      "id",
-      "name",
-      "status",
-      "maxPlayers",
-      "gameLength",
-      "gameType"
-    ],
-    "additionalProperties": false
-  };
 
-export default function GameCreateForm() {
+
+export default function GameCreateForm({ schema, route }) {
   const { properties, required } = schema;
   const dispatch = useDispatch();
   const router = useRouter();
@@ -86,10 +16,12 @@ export default function GameCreateForm() {
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
     //dispatch the addModel action
-    const { payload } = await dispatch(addModel(formDataObj, 'games'));
+    const modelName = schema.title.toLowerCase()
+    console.log("model", modelName)
+    const { payload } = await dispatch(addModel({modelData: formDataObj, modelName}, schema.title.toLowerCase()));
     if(payload && payload.id) {
       //redirect to the game page
-      router.push(`/games/${payload.id}`);
+      router.push(`/${modelName}/${payload.id}`);
     }
   };
 

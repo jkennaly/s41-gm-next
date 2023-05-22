@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "MonthlyShipPayments": {
+        "type": "number"
+      },
+      "ShipDebt": {
+        "type": "number"
+      },
+      "OtherDebt": {
+        "type": "number"
+      },
+      "MonthlyPension": {
+        "type": "number"
+      },
+      "CashOnHand": {
+        "type": "number"
+      },
+      "MonthlyLivingCost": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "MonthlyShipPayments",
+      "ShipDebt",
+      "OtherDebt",
+      "MonthlyPension",
+      "CashOnHand",
+      "MonthlyLivingCost"
+    ]
+  }
+  

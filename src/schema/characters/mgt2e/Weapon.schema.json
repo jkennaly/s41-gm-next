@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "The name of the weapon."
+      },
+      "Damage": {
+        "type": "string",
+        "description": "The damage caused by the weapon."
+      },
+      "Mass": {
+        "type": "number",
+        "description": "The mass or weight of the weapon."
+      },
+      "MagazineSize": {
+        "type": "number",
+        "description": "The size of the weapon's magazine."
+      },
+      "MagazineCurrent": {
+        "type": "number",
+        "description": "The current number of rounds in the weapon's magazine."
+      },
+      "MagazineCost": {
+        "type": "number",
+        "description": "The cost of the weapon's magazine."
+      },
+      "Range": {
+        "type": "string",
+        "description": "The range of the weapon."
+      },
+      "Traits": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "description": "Traits or characteristics associated with the weapon."
+      },
+      "SourceReference": {
+        "type": "object",
+        "description": "The reference to the source material or book where the weapon is described."
+      }
+    },
+    "required": [
+      "name",
+      "Damage",
+      "Mass",
+      "MagazineSize",
+      "MagazineCurrent",
+      "MagazineCost",
+      "Range",
+      "Traits",
+      "SourceReference"
+    ]
+  }
+  

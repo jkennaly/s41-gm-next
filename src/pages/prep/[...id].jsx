@@ -9,7 +9,8 @@ import { useAuth } from '../../auth/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import GameHeading from '../../components/lobby/GameHeading';
 import GameStats from '../../components/lobby/GameStats';
-import GameGMList from '../../components/gm/GameGMList';
+import CardList from '../../components/cards/CardList';
+import Card from '../../components/cards/CharacterCreate';
 import ActivityTable from '../../components/lobby/ActivityTable';
 import { fetchAssocData } from '../../store/actions/models';
 import { selectGameData } from '../../store/selectors/games';
@@ -19,8 +20,6 @@ const GameDetail = () => {
   const router = useRouter();
   const [authId, setAuthId] = useState(0)
   const auth = useAuth();
-
-  const userData = useSelector((state) => selectUserData(state, authId));
   const { id: ids } = router.query; // get the dynamic route param
     const id = ids && ids.length ? parseInt(ids[0], 10) : 0;
     
@@ -38,8 +37,9 @@ const GameDetail = () => {
   useEffect(() => {
     if(auth.userId()) setAuthId(auth.userId())
   })
+
+  const userData = useSelector((state) => selectUserData(state, authId));
   if (!gameData) return <div>Loading...</div>; // Loading state
-  console.log('GameDetail gameData', gameData);
   return (
     <>
       <Head>
@@ -59,10 +59,10 @@ const GameDetail = () => {
         userData={userData}
         gameData={gameData}
       />
-      <GameStats stats={Object.entries(gameData).filter(([name, value]) => !value || ['string', 'number'].includes(typeof value)).map(([name, value]) => ({name, value: value || ''}))} />
-      {gameData.gm && <GameGMList gmList={[gameData.gm]} />}
-      <ActivityTable activityItems={[]} />
     </div>
+    <CardList cards={[<Card key={"create"} />]}>
+      
+    </CardList>
       </main>
       <Footer />
     </>

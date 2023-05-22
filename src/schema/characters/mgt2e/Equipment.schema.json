@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "The name of the equipment."
+      },
+      "Mass": {
+        "type": "number",
+        "description": "The mass or weight of the equipment."
+      },
+      "TL": {
+        "type": "number",
+        "description": "The tech level of the equipment."
+      },
+      "Traits": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "description": "Traits or characteristics associated with the equipment."
+      },
+      "SourceReference": {
+        "type": "object",
+        "description": "The reference to the source of the equipment."
+      }
+    },
+    "required": [
+      "name",
+      "Mass",
+      "TL",
+      "Traits",
+      "SourceReference"
+    ]
+}
+  

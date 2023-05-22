@@ -7,20 +7,26 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../auth/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import Table from '../../components/dice/Table';
 import GameHeading from '../../components/lobby/GameHeading';
 import GameStats from '../../components/lobby/GameStats';
-import GameGMList from '../../components/gm/GameGMList';
+import CardList from '../../components/cards/CardList';
+import Card from '../../components/cards/CharacterCreate';
 import ActivityTable from '../../components/lobby/ActivityTable';
 import { fetchAssocData } from '../../store/actions/models';
 import { selectGameData } from '../../store/selectors/games';
 import { selectUserData } from '@/store/selectors/users';
 
+import * as Colyseus from "colyseus.js"
+
+var client = new Colyseus.Client('ws://localhost:3001')
+
 const GameDetail = () => {
   const router = useRouter();
   const [authId, setAuthId] = useState(0)
+  const [room, setRoom] = useState(null)
+  const [gameState, setGameState] = useState(null)
   const auth = useAuth();
-
-  const userData = useSelector((state) => selectUserData(state, authId));
   const { id: ids } = router.query; // get the dynamic route param
     const id = ids && ids.length ? parseInt(ids[0], 10) : 0;
     
@@ -29,17 +35,54 @@ const GameDetail = () => {
     
   // Fetch game data when component mounts or id changes
   useEffect(() => {
-    if (id) {
-      dispatch(fetchAssocData({id, modelName: 'games'}));
-    }
-  }, [dispatch, id]);
+    const joinOrCreateRoom = async () => {
+      try {
+        if (id) {
+          const roomOptions = { 
+            gameId: id.toString(), 
+            create: true,
+            token: (await auth.getAccessToken()),
+          }
+          const room = await client.joinOrCreate(`dice_game`, roomOptions);
+  
+          room.onStateChange((state) => {
+
+            setGameState(state);
+          });
+  
+          room.onMessage("message_type", (message) => {
+            console.log(client.id, "received on", room.name, message);
+          });
+  
+          room.onError((code, message) => {
+            console.log(client.id, "couldn't join", room.name);
+          });
+  
+          room.onLeave((code) => {
+            console.log(client.id, "left", room.name);
+          });
+  
+          setRoom(room);
+        }
+      } catch (error) {
+        if (error.message === 'TOKEN_EXPIRED') {
+          // request for a new token or refresh token
+        } else {
+        console.log("JOIN ERROR", error);
+        }
+      }
+    };
+  
+    joinOrCreateRoom();
+  }, [dispatch, id, client]);
 
 
   useEffect(() => {
     if(auth.userId()) setAuthId(auth.userId())
   })
+
+  const userData = useSelector((state) => selectUserData(state, authId));
   if (!gameData) return <div>Loading...</div>; // Loading state
-  console.log('GameDetail gameData', gameData);
   return (
     <>
       <Head>
@@ -59,10 +102,9 @@ const GameDetail = () => {
         userData={userData}
         gameData={gameData}
       />
-      <GameStats stats={Object.entries(gameData).filter(([name, value]) => !value || ['string', 'number'].includes(typeof value)).map(([name, value]) => ({name, value: value || ''}))} />
-      {gameData.gm && <GameGMList gmList={[gameData.gm]} />}
-      <ActivityTable activityItems={[]} />
     </div>
+    <Table gameState={gameState} />
+
       </main>
       <Footer />
     </>

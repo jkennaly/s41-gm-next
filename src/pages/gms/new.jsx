@@ -7,9 +7,10 @@ import AppShell from '@/components/AppShell'
 import { Footer } from '@/components/Footer'
 import GameCreateForm from '@/components/lobby/GameCreateForm'
 
-import schema from '@/schemas/Games.schema.json'
+import schema from '@/schema/GM.schema.json'
 
 export default function Home() {
+
   
   // Use dispatch hook for dispatching actions
   const dispatch = useDispatch()

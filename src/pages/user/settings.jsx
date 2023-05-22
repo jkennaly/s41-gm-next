@@ -5,11 +5,13 @@ import Head from 'next/head'
 
 import AppShell from '@/components/AppShell'
 import { Footer } from '@/components/Footer'
-import GameCreateForm from '@/components/lobby/GameCreateForm'
+import UserSettingsForm from '@/components/admin/UserSettingsForm'
 
-import schema from '@/schemas/Games.schema.json'
+import schema from '@/schema/GM.schema.json'
+import UserSettings from '@/components/admin/UserSettingsForm'
 
 export default function Home() {
+
   
   // Use dispatch hook for dispatching actions
   const dispatch = useDispatch()
@@ -29,7 +31,7 @@ export default function Home() {
       </Head>
       <AppShell />
       <main>
-        <GameCreateForm schema={schema} />
+        <UserSettingsForm />
       </main>
       <Footer />
     </>

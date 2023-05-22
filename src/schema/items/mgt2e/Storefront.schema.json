@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "proprietor": {
+        "type": "string",
+        "description": "The proprietor of the storefront, either a character or an organization."
+      },
+      "automated": {
+        "type": "boolean",
+        "description": "Indicates whether the storefront is automated."
+      },
+      "characterOperated": {
+        "type": "boolean",
+        "description": "Indicates whether the storefront is character-operated."
+      },
+      "numberOfEmployees": {
+        "type": "integer",
+        "description": "The number of people working at the character-operated storefront."
+      },
+      "dropshipCapable": {
+        "type": "boolean",
+        "description": "Indicates whether the storefront is dropship-capable."
+      },
+      "range": {
+        "type": "string",
+        "description": "The range of the dropship capability, in meters or parsecs."
+      },
+      "deliveryEstimate": {
+        "type": "object",
+        "description": "The estimated delivery time for orders placed at the storefront."
+      },
+      "deliveryFee": {
+        "type": "number",
+        "description": "The delivery fee, proportional to the delivery time."
+      },
+      "specialty": {
+        "type": "string",
+        "enum": ["weapons", "armor", "augmentation", "equipment", "other", "none"],
+        "description": "The specialty of the storefront."
+      },
+      "goodsTechLevels": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "description": "The tech levels of the goods sold by the storefront."
+      },
+      "goodsLawLevels": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "description": "The law levels of the goods sold by the storefront."
+      },
+      "goodsMass": {
+        "type": "number",
+        "description": "The total mass of goods in stock. (Required for non-dropshipCapable storefronts)"
+      },
+      "targetSocialStanding": {
+        "type": "integer",
+        "description": "The target social standing of the store. Apply price penalty based on the difference between character SOC and the target."
+      }
+    },
+    "required": ["proprietor", "automated", "characterOperated", "dropshipCapable"]
+  }
+  

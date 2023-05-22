@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GMs",
+  "description": "A JSON representation of the Players model.",
+  "type": "array",
+    "properties": {
+      "imageUrl": {
+        "type": "string",
+        "description": "The URL of the player's image.",
+        "format": "uri",
+        "generator": "user"
+      },
+      "experienceLevel": {
+        "type": "string",
+        "description": "The experience level of the player.",
+        "enum": ["Beginner", "Intermediate", "Advanced"],
+        "generator": "user"
+      },
+      "availability": {
+        "type": "string",
+        "description": "The availability of the player.",
+        "generator": "user"
+      },
+      "language": {
+        "type": "string",
+        "description": "The language preference of the player.",
+        "generator": "user"
+      },
+      "preferredGenre": {
+        "type": "string",
+        "description": "The preferred genre of the player.",
+        "generator": "user"
+      }
+    },
+    "required": ["name", "imageUrl", "experienceLevel", "availability", "language", "preferredGenre"],
+    "additionalProperties": false
+  
+}

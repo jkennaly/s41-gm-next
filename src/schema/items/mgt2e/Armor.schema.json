@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "allOf": [
+      {
+        "$ref": "./CatalogItem.schema.json"
+      },
+      {
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of armor."
+          },
+          "protection": {
+            "type": "number",
+            "description": "The level of protection provided by the armor."
+          },
+          "radiation": {
+            "type": "number",
+            "description": "The level of radiation protection provided by the armor."
+          },
+          "mass": {
+            "type": "number",
+            "description": "The mass or weight of the armor."
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Options or additional features associated with the armor."
+          }
+        },
+        "required": ["type", "protection", "radiation", "mass", "options"]
+      }
+    ]
+  }
+  
