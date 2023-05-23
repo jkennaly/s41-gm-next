@@ -28,8 +28,8 @@ var client = new Colyseus.Client('ws://localhost:3001')
 function addMethodsToGameState(gameState) {
   return {
     ...gameState,
-    currentLeaderId: determineCurrentLeader(gameState),
-    getCurrentLeaderId: () => determineCurrentLeader(gameState),
+    currentLeader: determineCurrentLeader(gameState),
+    getCurrentLeader: () => determineCurrentLeader(gameState),
     getPlayerIds: () => getPlayerIds(gameState),
   };
 }
@@ -51,9 +51,9 @@ const GameDetail = () => {
   useEffect(() => {
     if (gameState) {
       //get the userId of the leader
-      const leaderId = gameState.getCurrentLeaderId();
+      const leader = gameState.getCurrentLeader();
       //set the leader state to the leader data
-      setLeaderId(leaderId);
+      if(leader) setLeaderId(leader.id);
 
     } else {
       setLeaderId(null)
@@ -135,8 +135,8 @@ const GameDetail = () => {
       />
     </div>
     <ScoreBoard
-  player={leader && { username: leader.username, imageUrl: leader.picture } || {}}
-  scores={[leader && { label: 'Score', value: 12 } || {}]}
+  player={leader && { username: leader.username, picture: leader.picture } || {}}
+  scores={[leader && gameState && { label: 'Score', value: gameState.currentLeader.roll } || {}]}
 />
     <ActionBar player={nextPlayer} user={userData} room={room} />
     <Table gameState={gameState} />

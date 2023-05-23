@@ -14,7 +14,6 @@ function ActionBar({ player, user, room }) {
                         <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                             <p className="text-sm font-medium text-gray-600">Coming Up Next</p>
                             <p className="text-xl font-bold text-gray-900 sm:text-2xl">{player.username}</p>
-                            <p className="text-sm font-medium text-gray-600">Player ID: {player.id}</p>
                         </div>
                     </div>
                     {/* Render button if user.id matches player.id */}

@@ -10,9 +10,7 @@ function Table({ gameState }) {
   }, [gameState]);
   return (
     <div>
-      <h2>Current Turn: {gameState.currentTurn}</h2>
       <div>
-        <h3>Player Rolls:</h3>
         {
           [...gameState.players.entries()].map(([playerId, player]) => (
             <PlayerCard key={playerId} player={player} />

@@ -1,5 +1,5 @@
 function ScoreBoard({ player, scores }) {
-    
+    console.log('Scorebaord player:', player);
     return (
         <>
       <div className="overflow-hidden rounded-lg bg-white shadow">
@@ -15,7 +15,6 @@ function ScoreBoard({ player, scores }) {
               <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                 <p className="text-sm font-medium text-gray-600">Current Leader</p>
                 <p className="text-xl font-bold text-gray-900 sm:text-2xl">{player.username}</p>
-                <p className="text-sm font-medium text-gray-600">Player ID: {player.id}</p>
               </div>
             </div>
           </div>
