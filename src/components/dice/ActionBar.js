@@ -1,5 +1,4 @@
 function ActionBar({ player, user, room }) {
-    console.log('player', player)
     return (
         <div className="overflow-hidden rounded-lg bg-white shadow">
             <h2 className="sr-only" id="profile-overview-title">

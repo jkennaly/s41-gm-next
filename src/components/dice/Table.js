@@ -3,11 +3,6 @@ import PlayerCard from './PlayerCard';
 
 function Table({ gameState }) {
   if (!gameState) return null;
-  useEffect(() => {
-    if (gameState) {
-      console.log('gameState:', JSON.parse(JSON.stringify(gameState)));
-    }
-  }, [gameState]);
   return (
     <div>
       <div>

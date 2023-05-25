@@ -1,5 +1,4 @@
 function ScoreBoard({ player, scores }) {
-    console.log('Scorebaord player:', player);
     return (
         <>
       <div className="overflow-hidden rounded-lg bg-white shadow">

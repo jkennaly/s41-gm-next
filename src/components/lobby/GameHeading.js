@@ -24,6 +24,9 @@ const GameHeading = ({ gameTitle, gameStatus, gameDescription, userData, gameDat
     {userIsGm && <Button href={`/prep/${gameData.id}`} className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
       Prepare for a session
     </Button>}
+    <Button href={`/lobby/${gameData.id}`} className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
+      Enter Lobby
+    </Button>
     <Button href={`/join/${gameData.id}`} className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
       Join the Game
     </Button>
