@@ -1,0 +1,57 @@
+[
+    {
+      "id": "coreCharacteristics",
+      "name": "Core Characteristics",
+      "prerequisites": [],
+      "completed": false
+    },
+    {
+      "id": "personalDataFile",
+      "name": "Personal Data File",
+      "prerequisites": [],
+      "completed": false
+    },
+    {
+      "id": "lifePaths",
+      "name": "Life Paths",
+      "prerequisites": ["coreCharacteristics"],
+      "completed": false
+    },
+    {
+      "id": "skills",
+      "name": "Skills",
+      "prerequisites": ["coreCharacteristics"],
+      "completed": false
+    },
+    {
+      "id": "armor",
+      "name": "Armor",
+      "prerequisites": ["coreCharacteristics"],
+      "completed": false
+    },
+    {
+      "id": "weapons",
+      "name": "Weapons",
+      "prerequisites": ["coreCharacteristics"],
+      "completed": false
+    },
+    {
+      "id": "augmentations",
+      "name": "Augmentations",
+      "prerequisites": ["coreCharacteristics"],
+      "completed": false
+    },
+    {
+      "id": "equipment",
+      "name": "Equipment",
+      "prerequisites": ["coreCharacteristics"],
+      "completed": false
+    },
+    {
+      "id": "finances",
+      "name": "Finances",
+      "prerequisites": ["coreCharacteristics"],
+      "completed": false
+    }
+  ]
+  

@@ -1,22 +1,22 @@
 import Head from 'next/head';
-import AppShell from '../../components/AppShell';
-import { Footer } from '../../components/Footer';
+import AppShell from '../../../../components/AppShell';
+import { Footer } from '../../../../components/Footer';
 
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../auth/auth';
+import { useAuth } from '../../../../auth/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import Table from '../../components/dice/Table';
-import ActionBar from '../../components/dice/ActionBar';
-import ScoreBoard from '../../components/dice/ScoreBoard';
-import LobbyHeading from '../../components/lobby/LobbyHeading';
-import GameStats from '../../components/lobby/GameStats';
-import CardList from '../../components/cards/CardList';
-import Card from '../../components/cards/CharacterCreate';
-import ActivityTable from '../../components/lobby/ActivityTable';
-import { fetchModelDataArray } from '../../store/actions/models';
-import { selectGameData } from '../../store/selectors/games';
+import Table from '../../../../components/dice/Table';
+import ActionBar from '../../../../components/dice/ActionBar';
+import ScoreBoard from '../../../../components/dice/ScoreBoard';
+import GameHeading from '../../../../components/lobby/GameHeading';
+import GameStats from '../../../../components/lobby/GameStats';
+import CardList from '../../../../components/cards/CardList';
+import Card from '../../../../components/cards/CharacterCreate';
+import Dashboard from '@/components/create/Dashboard';
+import { fetchModelDataArray } from '../../../../store/actions/models';
+import { selectGameData } from '../../../../store/selectors/games';
 import { selectUserData } from '@/store/selectors/users';
 import { getPlayerIds  } from '@/utils/gameMethods';
 
@@ -32,7 +32,7 @@ function addMethodsToGameState(gameState) {
   };
 }
 
-const LobbyDetail = () => {
+const Mgt2eCharGen = () => {
   const router = useRouter();
   const [authId, setAuthId] = useState(0)
   const [room, setRoom] = useState(null)
@@ -43,6 +43,7 @@ const LobbyDetail = () => {
     
     const dispatch = useDispatch();
     const gameData = useSelector((state) => selectGameData(state, id));
+    const nextPlayer = useSelector((state) => selectUserData(state, gameState && gameState.currentTurn));
 
     
   // Fetch game data when component mounts or id changes
@@ -55,7 +56,7 @@ const LobbyDetail = () => {
             create: true,
             token: (await auth.getAccessToken()),
           }
-          const room = await client.joinOrCreate(`lobby`, roomOptions);
+          const room = await client.joinOrCreate(`chargen_mgt2e`, roomOptions);
   
           room.onStateChange((state) => {
 
@@ -76,12 +77,6 @@ const LobbyDetail = () => {
   
           room.onLeave((code) => {
             console.log(client.id, "left", room.name);
-          });
-
-          room.onMessage('MOVE_TO_CHARACTER_GENERATION', async () => {
-            await room.leave();
-            // Route to character generation room
-            router.push(`/games/mgt2e/chargen/${id}`)
           });
           
   
@@ -106,7 +101,7 @@ const LobbyDetail = () => {
 
   const userData = useSelector((state) => selectUserData(state, authId));
   if (!gameData) return <div>Loading...</div>; // Loading state
-  console.log('Current state of Lobby', JSON.parse(JSON.stringify(gameState)))
+  console.log('Current state of Game', JSON.parse(JSON.stringify(gameState)))
   return (
     <>
       <Head>
@@ -119,14 +114,15 @@ const LobbyDetail = () => {
       <AppShell />
       <main>
       <div>
-      <LobbyHeading 
-        gameState={gameState} 
+      <GameHeading 
+        gameStatus={'active'} 
+        gameDescription={gameData.description || ''} 
+        gameTitle={gameData.name}
         userData={userData}
         gameData={gameData}
-        room={room}
       />
     </div>
-    <Table gameState={gameState} />
+    <Dashboard gameState={gameState || {}} userData={userData} room={room} />
 
       </main>
       <Footer />
@@ -136,4 +132,4 @@ const LobbyDetail = () => {
   );
 };
 
-export default LobbyDetail;
+export default Mgt2eCharGen;

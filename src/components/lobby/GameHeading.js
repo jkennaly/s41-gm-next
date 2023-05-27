@@ -18,6 +18,7 @@ const GameHeading = ({ gameTitle, gameStatus, gameDescription, userData, gameDat
       </div>
       <p className="mt-2 text-xs leading-6 text-gray-400">{gameDescription}</p>
     </div>
+    {gameStatus !== 'active' && <>
     {userIsGm && <div className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
       Schedule a session
     </div>}
@@ -30,6 +31,7 @@ const GameHeading = ({ gameTitle, gameStatus, gameDescription, userData, gameDat
     <Button href={`/join/${gameData.id}`} className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
       Join the Game
     </Button>
+    </>}
     <div className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
       {gameStatus}
     </div>
