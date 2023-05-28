@@ -14,5 +14,8 @@ export default {
   playerKicked: 'bg-orange-400',
   playerMessage: 'bg-purple-400',
   hostChange: 'bg-teal-400',
+  started: 'bg-green-400',
+  completed: 'bg-red-400',
+  disabled: 'bg-gray-400',
   }
   

@@ -10,6 +10,8 @@ export default function CharacterSelectionContainer({ gameState = {}, userData =
   const isGm = userData.id && userData.id === gameState?.dbGame?.gmId;
   const hasPC = !isGm && Object.keys(pcs).includes(userData.id);
 
+  console.log('CharacterSelectionContainer npcs', npcs.filter(c => c && c.id));
+
   // Handle the creation of a new character
   const handleNewCharacter = () => {
     if(!hasPC && room && room.send) room.send('CREATE_CHARACTER')
@@ -26,21 +28,21 @@ export default function CharacterSelectionContainer({ gameState = {}, userData =
       {!hasPC && <button onClick={handleNewCharacter} disabled={hasPC}> New Character </button>}
         <div className="p-4">
           <h2 className="font-bold mb-2">PCs</h2>
-          {Object.values(pcs).filter(Boolean).map((character) => (
+          {Object.values(pcs).filter(c => c && c.id).map((character) => (
             <button 
               key={character.id} 
               onClick={() => handleCharacterClick(character)}>
-              {character.name}
+              {character?.personalDataFile?.Name || `Unnamed PC ${character.id}`}
             </button>
           ))}
         </div>
         <div className="p-4">
           <h2 className="font-bold mb-2">NPCs</h2>
-          {Object.values(npcs).filter(Boolean).map((character) => (
+          {npcs.filter(c => c && c.id).map((character) => (
             <button 
               key={character.id} 
               onClick={() => handleCharacterClick(character)}>
-              {character.name}
+              {character?.personalDataFile?.Name || `Unnamed NPC ${character.id}`}
             </button>
           ))}
         </div>
