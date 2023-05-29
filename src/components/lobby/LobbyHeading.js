@@ -40,7 +40,6 @@ const LobbyHeading = ({
 )};
 
 LobbyHeading.propTypes = {
-  gameState: PropTypes.string.isRequired,
   userData: PropTypes.string.isRequired,
   gameData: PropTypes.string.isRequired,
   room: PropTypes.string.isRequired,

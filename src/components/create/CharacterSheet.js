@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import PDFC from './sections/PersonalDataFileCard'
-import CCC from './sections/CoreCharacteristicsCard'
-import LPC from './sections/LifePathCard'
-import sections from './sections.json';
+import Overview from './sections/Overview'
+import PersonalDataFileForm from './entry/pdfForm'
+import getStatusOfSection from '@/utils/getStatusOfSection';
 
 export default function CharacterSheet({ character, gameState, userData }) {
   const [activeSection, setActiveSection] = useState(null);
@@ -10,20 +9,23 @@ export default function CharacterSheet({ character, gameState, userData }) {
   console.log('CharacterSheet character', character);
 
   const handleSectionClick = section => e => {
-    console.log('handleSectionClick section', section);
+    const status = getStatusOfSection(section)(character);
+    if(status === 'disabled') return false;
     setActiveSection(section);
   };
 
   return (
     <div className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
       <main className="flex-1 min-w-0">
-        <div className="min-w-0 flex-1">
-          <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-            <PDFC clickHandler={handleSectionClick('PDF')} userData={userData} selectedCharacter={character} gameState={gameState} />
-            <CCC clickHandler={handleSectionClick('CC')} userData={userData} selectedCharacter={character} gameState={gameState} />
-            <LPC clickHandler={handleSectionClick('LP')} userData={userData} selectedCharacter={character} gameState={gameState} />
-          </ul>
-        </div>
+        {character && <div className="min-w-0 flex-1">
+      { activeSection === 'PersonalDataFile'|| activeSection === 'PDF' ? <PersonalDataFileForm setActiveSection={setActiveSection} character={character} />
+          : <Overview 
+            handleSectionClick={handleSectionClick} 
+            character={character}
+            gameState={gameState}
+            userData={userData}
+          />}
+        </div>}
       </main>
     </div>
   );

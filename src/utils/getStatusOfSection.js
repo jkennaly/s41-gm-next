@@ -1,6 +1,7 @@
 const getStatusOfSection = (section) => {
     return (character) => {
       switch (section) {
+        case 'PDF':
         case 'PersonalDataFile': {
           const personalData = character.personalDataFile;
           const allFieldsFilled = personalData.name && personalData.species && personalData.age && personalData.title;
@@ -8,6 +9,7 @@ const getStatusOfSection = (section) => {
   
           return allFieldsFilled ? 'completed' : anyFieldsFilled ? 'started' : 'waiting';
         }
+        case 'CC':
         case 'CoreCharacteristics': {
           const coreCharacteristics = character.coreCharacteristics;
           const allFieldsFilled = coreCharacteristics.strength && coreCharacteristics.dexterity && coreCharacteristics.endurance
@@ -17,6 +19,7 @@ const getStatusOfSection = (section) => {
   
           return allFieldsFilled ? 'completed' : anyFieldsFilled ? 'started' : 'waiting';
         }
+        case 'LP':
         case 'LifePath': {
           if(getStatusOfSection('CoreCharacteristics')(character) !== 'completed') return 'disabled';
           const lifePaths = character?.lifePaths;

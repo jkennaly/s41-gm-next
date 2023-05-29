@@ -18,7 +18,9 @@ export default function Document() {
 <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
       </Head>
       <body className="h-full">
+      <div id="root">
         <Main />
+          </div>
         <NextScript />
       </body>
     </Html>
