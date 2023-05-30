@@ -55,6 +55,19 @@ import { api } from '../../api';
       }
     }
   );
+  
+
+  export const fetchModelContext = createAsyncThunk(
+    `model/fetchModelContext`,
+    async ({ id, modelName }, { rejectWithValue }) => {
+      try {
+        const response = await api.get(`/contexts/${modelName}/${id}`);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
 
   export const addModel = createAsyncThunk(
     `model/addModel`,
