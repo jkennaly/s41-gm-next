@@ -15,11 +15,11 @@ import GameStats from '../../../../components/lobby/GameStats';
 import CardList from '../../../../components/cards/CardList';
 import Card from '../../../../components/cards/CharacterCreate';
 import Dashboard from '@/components/create/Dashboard';
-import { fetchModelDataArray } from '../../../../store/actions/models';
+import { fetchModelDataArray, fetchControlledCharacters } from '../../../../store/actions/models';
 import { selectGameData } from '../../../../store/selectors/games';
 import { selectUserData } from '@/store/selectors/users';
 import { getPlayerIds  } from '@/utils/gameMethods';
-
+import { selectControlled } from '@/store/selectors/characters';
 
 import * as Colyseus from "colyseus.js"
 
@@ -44,6 +44,13 @@ const Mgt2eCharGen = () => {
     const dispatch = useDispatch();
     const gameData = useSelector((state) => selectGameData(state, id));
     const nextPlayer = useSelector((state) => selectUserData(state, gameState && gameState.currentTurn));
+
+    const controlledCharacters = useSelector((state) => selectControlled(state, authId));
+  //updatee the characters controlled by the user
+  useEffect(() => {
+    if(id) dispatch(fetchControlledCharacters({gameId: id}));
+    
+  }, [id])
 
     
   // Fetch game data when component mounts or id changes
@@ -101,7 +108,7 @@ const Mgt2eCharGen = () => {
 
   const userData = useSelector((state) => selectUserData(state, authId));
   if (!gameData) return <div>Loading...</div>; // Loading state
-  console.log('Current state of Game', JSON.parse(JSON.stringify(gameState)))
+  //console.log('Current state of Game', JSON.parse(JSON.stringify(gameState)))
   return (
     <>
       <Head>
@@ -122,7 +129,12 @@ const Mgt2eCharGen = () => {
         gameData={gameData}
       />
     </div>
-    <Dashboard gameState={gameState || {}} userData={userData} room={room} />
+    <Dashboard 
+      controlledCharacters={controlledCharacters} 
+      gameState={gameState || {}} 
+      userData={userData} 
+      room={room} 
+    />
 
       </main>
       <Footer />

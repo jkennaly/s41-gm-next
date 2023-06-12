@@ -4,6 +4,7 @@ const getStatusOfSection = (section) => {
         case 'PDF':
         case 'PersonalDataFile': {
           const personalData = character.personalDataFile;
+          if(!personalData) return 'waiting';
           const allFieldsFilled = personalData.name && personalData.species && personalData.age && personalData.title;
           const anyFieldsFilled = personalData.name || personalData.species || personalData.age || personalData.title;
   
@@ -12,6 +13,7 @@ const getStatusOfSection = (section) => {
         case 'CC':
         case 'CoreCharacteristics': {
           const coreCharacteristics = character.coreCharacteristics;
+          if(!coreCharacteristics) return 'waiting';
           const allFieldsFilled = coreCharacteristics.strength && coreCharacteristics.dexterity && coreCharacteristics.endurance
                                   && coreCharacteristics.intelligence && coreCharacteristics.education && coreCharacteristics.socialStanding;
           const anyFieldsFilled = coreCharacteristics.strength || coreCharacteristics.dexterity || coreCharacteristics.endurance

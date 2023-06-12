@@ -1,8 +1,11 @@
 import React from 'react';
 import statuses from '../../lobby/statuses';
 import getStatusOfSection from '@/utils/getStatusOfSection';
+import { useSelector } from 'react-redux';
+import { selectCharacter } from '@/store/selectors/characters';
 
-const LifePathCard = ({ userData, selectedCharacter, gameState, clickHandler }) => {
+const LifePathCard = ({ userData, gameState, clickHandler, characterId }) => {
+    const selectedCharacter = useSelector((state) => selectCharacter(state, characterId));
     const lifePaths = selectedCharacter?.lifePaths;
     const status = getStatusOfSection('LifePath')(selectedCharacter);
     const last = lifePaths.length - 1;

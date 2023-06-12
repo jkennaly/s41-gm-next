@@ -1,8 +1,11 @@
 import React from 'react';
 import statuses from '../../lobby/statuses';
 import getStatusOfSection from '@/utils/getStatusOfSection';
+import { useSelector } from 'react-redux';
+import { selectCharacter } from '@/store/selectors/characters';
 
-const AugmentationCard = ({ userData, selectedCharacter, gameState, clickHandler }) => {
+const AugmentationCard = ({ userData, gameState, clickHandler, characterId }) => {
+    const selectedCharacter = useSelector((state) => selectCharacter(state, characterId));
     const augmentations = selectedCharacter?.augmentations;
     const status = getStatusOfSection('Augmentation')(selectedCharacter);
 

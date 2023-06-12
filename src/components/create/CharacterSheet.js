@@ -6,7 +6,7 @@ import getStatusOfSection from '@/utils/getStatusOfSection';
 export default function CharacterSheet({ character, gameState, userData }) {
   const [activeSection, setActiveSection] = useState(null);
 
-  console.log('CharacterSheet character', character);
+  //console.log('CharacterSheet gameState', gameState);
 
   const handleSectionClick = section => e => {
     const status = getStatusOfSection(section)(character);
@@ -18,7 +18,7 @@ export default function CharacterSheet({ character, gameState, userData }) {
     <div className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
       <main className="flex-1 min-w-0">
         {character && <div className="min-w-0 flex-1">
-      { activeSection === 'PersonalDataFile'|| activeSection === 'PDF' ? <PersonalDataFileForm setActiveSection={setActiveSection} character={character} />
+      { (activeSection === 'PersonalDataFile' || activeSection === 'PDF') && gameState && gameState.id && character && character.id ? <PersonalDataFileForm gameId={gameState && gameState.id} setActiveSection={setActiveSection} characterId={character.id} />
           : <Overview 
             handleSectionClick={handleSectionClick} 
             character={character}

@@ -1,53 +1,75 @@
 import React, { useState, useRef  } from 'react';
 import styles from './pdf.module.css'
+import api from '@/api';
+import { useDispatch } from 'react-redux';
+import { createPortrait } from '@/store/actions/models';
 
-function PersonalDataFileForm({ setActiveSection }) {
+function PortraitForm({ formData, gameId, characterId, handleModalClose }) {
   const fileInputRef = useRef();
   const [selectedOption, setSelectedOption] = useState(''); // For storing selected option (url, generate, upload)
   const [imageURL, setImageURL] = useState(''); // For storing image URL
   const [imageDescription, setImageDescription] = useState(''); // For storing image description when generating image
-
+  const [suggestUrl, setSuggestUrl] = useState(''); // For storing image description when generating image
+  const dispatch = useDispatch();
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const getSuggestion = async () => {
+    if(!characterId) return;
+    const ctx = {
+        formData,
+        gameId,
+        characterId,
+
+    }
+    ctx.formData.imageDescription = imageDescription;
+    try {
+      const { data } = await api.post(`/suggestions/portrait`, ctx);
+      console.log('data', data);
+      setSuggestUrl(data.url);
+    } catch (error) {
+        console.log('error', error);
+    }
+  }
+
+  const handleSave = async (e) => {
     e.preventDefault();
   
-    const data = new FormData();
+    const data = {}
+    data['imageDescription'] = imageDescription
   
     // Depending on the selected option, different data is sent
     switch (selectedOption) {
       case 'url':
-        data.append('imageUrl', imageURL);
+        data['imageUrl'] = imageURL
         break;
   
       case 'generate':
         // The image description will be sent to your image generating API
-        data.append('imageDescription', imageDescription);
-        break;
-  
-      case 'upload':
-        const file = fileInputRef.current.files[0];
-        data.append('picture', file);
+        data['imageUrl'] = suggestUrl
         break;
   
       default:
         console.error('Invalid option');
         return;
     }
+    //dispatch an action to create the portrait
 
-    setActiveSection(null)
+    dispatch(createPortrait({modelData: data, gameId, characterId}))
+    handleModalClose();
+
+
   };
 
   const handleCancel = (event) => {
       event.preventDefault();
-      setActiveSection(null)
+      handleModalClose();
   };
   
 
   return (
-    <form className={styles.container} onSubmit={handleSubmit}>
+    <>
       <label className={styles.label}>
         Use Image URL:
         <input 
@@ -75,12 +97,8 @@ function PersonalDataFileForm({ setActiveSection }) {
           onChange={handleOptionChange} 
           className={styles.radioInput} 
         />
-        <textarea
-          name="currentPrompt"
-          rows="3"
-          disabled
-          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
-        />
+        <label>
+          Image Description:
         <textarea
           name="imageDescription"
           rows="3"
@@ -89,7 +107,9 @@ function PersonalDataFileForm({ setActiveSection }) {
           disabled={selectedOption !== 'generate'}
           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
         />
+        </label>
         <button 
+        onClick={getSuggestion}
           type="button"
           disabled={selectedOption !== 'generate'} 
           className={styles.generateButton} 
@@ -115,15 +135,18 @@ function PersonalDataFileForm({ setActiveSection }) {
           ref={fileInputRef}
         />
       </label>
+      {suggestUrl && <div>
+        <img src={suggestUrl} alt="portrait" />
+      </div>}
 
       <div className="pt-5">
                 <div className="flex justify-end">
-                    <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                    <button onClick={handleSave} type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
                     <button onClick={handleCancel} type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
                 </div>
             </div>
-    </form>
+    </>
   );
 };
 
-export default PersonalDataFileForm;
+export default PortraitForm;

@@ -1,8 +1,11 @@
 import React from 'react';
 import statuses from '../../lobby/statuses';
 import getStatusOfSection from '@/utils/getStatusOfSection';
+import { useSelector } from 'react-redux';
+import { selectCharacter } from '@/store/selectors/characters';
 
-const SkillsCard = ({ userData, selectedCharacter, gameState, clickHandler }) => {
+const SkillsCard = ({ userData, gameState, clickHandler, characterId }) => {
+    const selectedCharacter = useSelector((state) => selectCharacter(state, characterId));
     const skills = selectedCharacter?.skills;
     const status = getStatusOfSection('Skills')(selectedCharacter);
 
