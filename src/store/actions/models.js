@@ -79,6 +79,13 @@ import { api } from '../../api';
         } catch (error) {
           return rejectWithValue(error.response.data);
         }
+      } else if(modelName === 'cc') {
+        try {
+          const response = await api.post(`/games/mgt2e/chargen/${characterId}/${modelName}`, modelData);
+          return response.data;
+        } catch (error) {
+          return rejectWithValue(error.response.data);
+        }
       } else {
         try {
           const response = await api.post(`/${modelName}`, modelData);
@@ -98,6 +105,18 @@ import { api } from '../../api';
           const pdf = character.personalDataFile
           const { data: portrait } = await api.get(`/portraits/${pdf.currentPortraitId}`);
           return {character, portrait};
+        } catch (error) {
+          return rejectWithValue(error.response.data);
+        }
+    }
+  );
+
+  export const updatePortraitSrc = createAsyncThunk(
+    `model/updatePortraitSrc`,
+    async ({ portraitId }, { rejectWithValue }) => {
+        try {
+          const { data: portrait } = await api.get(`/portraits/update/${portraitId}`);
+          return portrait;
         } catch (error) {
           return rejectWithValue(error.response.data);
         }

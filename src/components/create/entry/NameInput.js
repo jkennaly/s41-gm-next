@@ -3,7 +3,8 @@ import axios from 'axios';
 
 const NameInput = ({ register, setValue }) => {
 
-  const handleSuggestClick = async () => {
+  const handleSuggestClick = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.get('https://randomuser.me/api/?inc=name');
       const suggestedName = `${response.data.results[0].name.first} ${response.data.results[0].name.last}`;

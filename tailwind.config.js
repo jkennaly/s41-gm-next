@@ -2,6 +2,18 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  variants: {
+    extend: {
+      inset: ['before', 'after'],
+      width: ['before', 'after'],
+      height: ['before', 'after'],
+      transform: ['before', 'after'],
+      rotate: ['before', 'after'],
+      content: ['before', 'after'],
+      backgroundColor: ['before', 'after'],
+      pointerEvents: ['before', 'after'],
+    },
+  },
   plugins: [
     // ...
     require('@tailwindcss/forms'),

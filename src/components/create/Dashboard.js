@@ -31,7 +31,7 @@ export default function CharacterSelectionContainer({
     .filter(c => npcs.some(n => n.id === c.id))
   
   useEffect(() => {
-    dispatch(fetchCharacters({gameId}));
+    if(gameId) dispatch(fetchCharacters({gameId}));
     
   }, [dispatch, gameId]);
   
@@ -96,7 +96,7 @@ export default function CharacterSelectionContainer({
       </div>
       <div className="w-3/4">
         {selectedCharacter && (
-          <CharacterSheet character={selectedCharacter} gameState={gameState?.dbGame || {}} />
+          <CharacterSheet userData={userData} room={room} character={selectedCharacter} gameState={gameState} />
         )}
         {!selectedCharacter && displayContext && isGm && gameId && (
           <Context gameId={gameId} />

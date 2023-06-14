@@ -96,10 +96,6 @@ const PersonalDataFileForm = ({ setActiveSection, characterId, gameId }) => {
         setModalOpen(true);
     };
 
-    const handleSelectPortrait = () => {
-        console.log("Select Portrait Clicked");
-    };
-
     const handleAddFeature = () => {
         setModalSubmit('feature')
 

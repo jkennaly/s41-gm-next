@@ -7,6 +7,8 @@ import { selectCharacter } from '@/store/selectors/characters';
 const CoreCharacteristicsCard = ({ userData, gameState, clickHandler, characterId }) => {
     const selectedCharacter = useSelector((state) => selectCharacter(state, characterId));
     const coreCharacteristics = selectedCharacter?.coreCharacteristics;
+    // console.log('CoreCharacteristicsCard selectedCharacter', JSON.parse(JSON.stringify(selectedCharacter)))
+    // console.log('CoreCharacteristicsCard coreCharacteristics', JSON.parse(JSON.stringify(coreCharacteristics)))
     const status = getStatusOfSection('CoreCharacteristics')(selectedCharacter);
 
     return (

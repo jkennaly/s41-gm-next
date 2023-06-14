@@ -55,6 +55,7 @@ export const selectImgSrcForCharacter = createSelector(
   [selectAllCharacterData, selectAllPortraitData, (_, characterId) => characterId],
   (characters = [], portraits = [], characterId) => {
     const character = characters.find((ctx) => ctx.id === characterId)
+    if(!character) return
     const pdf = character.personalDataFile || {}
     const portraitId = pdf.currentPortraitId || {}
     const portrait = portraits.find((ctx) => ctx.id === portraitId) || {}

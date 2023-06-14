@@ -2,7 +2,7 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  fetchCharacter, createPortrait, fetchControlledCharacters, fetchModels, fetchModelData, addModel, fetchAssocData, fetchModelContext, fetchUniverseSubdivisions
+  updatePortraitSrc, fetchCharacter, createPortrait, fetchControlledCharacters, fetchModels, fetchModelData, addModel, fetchAssocData, fetchModelContext, fetchUniverseSubdivisions
 } from '../actions/models';
 import { HYDRATE } from "next-redux-wrapper";
 import { mergeIntoArray, mergeArrays } from '../../utils/storeMethods';
@@ -19,6 +19,13 @@ const contextsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    .addCase(updatePortraitSrc.fulfilled, (state, action) => {
+      const portrait = action.payload;
+      const mergedPort = mergeIntoArray(state.portraits, portrait);
+      state.portraits = mergedPort;
+      state.error = null;
+      
+    })
     .addCase(createPortrait.fulfilled, (state, action) => {
       const { portrait, character } = action.payload;
       const mergedChar = mergeIntoArray(state.characters, character);
@@ -29,7 +36,7 @@ const contextsSlice = createSlice({
       
     })
     .addCase(addModel.fulfilled, (state, action) => {
-      if(action.meta.arg.modelName === 'pdf'){
+      if(action.meta.arg.modelName === 'pdf' || action.meta.arg.modelName === 'cc'){
 
         state.characters = [action.payload, ...state.characters ];
         const uniqueCharacters = state.characters.filter((character, index, self) =>
