@@ -72,14 +72,7 @@ import { api } from '../../api';
   export const addModel = createAsyncThunk(
     `model/addModel`,
     async ({ modelData, modelName, characterId}, { rejectWithValue }) => {
-      if(modelName === 'pdf') {
-        try {
-          const response = await api.post(`/games/mgt2e/chargen/${characterId}/${modelName}`, modelData);
-          return response.data;
-        } catch (error) {
-          return rejectWithValue(error.response.data);
-        }
-      } else if(modelName === 'cc') {
+      if(['pdf', 'cc', 'ss'].includes(modelName)) {
         try {
           const response = await api.post(`/games/mgt2e/chargen/${characterId}/${modelName}`, modelData);
           return response.data;
@@ -133,10 +126,10 @@ import { api } from '../../api';
           .filter(Boolean)
           .map(p => p.currentPortraitId)
           .filter(Boolean)
-        console.log('fetchControlledCharacters', {gameId, portraitIds, pdfs})
+        //console.log('fetchControlledCharacters', {gameId, portraitIds, pdfs})
         const portraitResponses = await Promise.all(portraitIds.map(id => api.get(`/portraits/${id}`)));
         const portraits = portraitResponses.map(r => r.data);
-        console.log('fetchControlledCharacters', {characters, portraitIds, portraits})
+        //console.log('fetchControlledCharacters', {characters, portraitIds, portraits})
         return {characters, portraits};
       } catch (error) {
         return rejectWithValue(error.response.data);
@@ -154,10 +147,10 @@ import { api } from '../../api';
           .filter(Boolean)
           .map(p => p.currentPortraitId)
           .filter(Boolean)
-        console.log('fetchCharacters', {gameId, portraitIds, pdfs})
+        //console.log('fetchCharacters', {gameId, portraitIds, pdfs})
         const portraitResponses = await Promise.all(portraitIds.map(id => api.get(`/portraits/${id}`)));
         const portraits = portraitResponses.map(r => r.data);
-        console.log('fetchCharacters', {characters, portraitIds, portraits})
+        //console.log('fetchCharacters', {characters, portraitIds, portraits})
         return {characters, portraits};
       } catch (error) {
         return rejectWithValue(error.response.data);
@@ -176,10 +169,10 @@ import { api } from '../../api';
           .filter(Boolean)
           .map(p => p.currentPortraitId)
           .filter(Boolean)
-        console.log('fetchCharacter', {characterId, portraitIds, pdfs})
+        //console.log('fetchCharacter', {characterId, portraitIds, pdfs})
         const portraitResponses = await Promise.all(portraitIds.map(id => api.get(`/portraits/${id}`)));
         const portraits = portraitResponses.map(r => r.data);
-        console.log('fetchCharacter', {characters, portraitIds, portraits})
+        //console.log('fetchCharacter', {characters, portraitIds, portraits})
         return {characters, portraits};
       } catch (error) {
         return rejectWithValue(error.response.data);

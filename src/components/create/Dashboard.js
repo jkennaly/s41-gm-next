@@ -11,7 +11,7 @@ export default function CharacterSelectionContainer({
   userData = {}, 
   room 
 }) {
-  console.log('CharacterSelectionContainer controlledCharacters', controlledCharacters)
+  //console.log('CharacterSelectionContainer controlledCharacters', controlledCharacters)
 
     const { pcs = {}, npcs = [] } = gameState;
   const [selectedCharacter, setSelectedCharacter] = useState(null);

@@ -39,7 +39,6 @@ const GameDetail = () => {
     if(auth.userId()) setAuthId(auth.userId())
   })
   if (!gameData) return <div>Loading...</div>; // Loading state
-  console.log('GameDetail gameData', gameData);
   return (
     <>
       <Head>

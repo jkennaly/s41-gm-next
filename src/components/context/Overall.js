@@ -5,7 +5,7 @@ import Feature from './Feature';
 
 // Assuming that you fetch data and pass it as a prop A060514-B N S Ni 0 GCE
 const ContextLayout = ({ game, context, display, setDisplay }) => {
-    console.log('Overall context:', context);
+    //console.log('Overall context:', context);
     const universeFeatures = context.features
         .filter(feature => !feature.subdivisionId)
     return (

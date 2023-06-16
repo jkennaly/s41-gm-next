@@ -15,10 +15,10 @@ import GameStats from '../../../../components/lobby/GameStats';
 import CardList from '../../../../components/cards/CardList';
 import Card from '../../../../components/cards/CharacterCreate';
 import Dashboard from '@/components/create/Dashboard';
-import { fetchModelDataArray, fetchControlledCharacters } from '../../../../store/actions/models';
+import { fetchModelDataArray, fetchControlledCharacters, fetchCharacters } from '../../../../store/actions/models';
 import { selectGameData } from '../../../../store/selectors/games';
 import { selectUserData } from '@/store/selectors/users';
-import { getPlayerIds  } from '@/utils/gameMethods';
+import { getPlayerIds, getCharacterIds  } from '@/utils/gameMethods';
 import { selectControlled } from '@/store/selectors/characters';
 
 import * as Colyseus from "colyseus.js"
@@ -29,6 +29,7 @@ function addMethodsToGameState(gameState) {
   return {
     ...gameState,
     getPlayerIds: () => getPlayerIds(gameState),
+    getCharacterIds: () => getCharacterIds(gameState),
   };
 }
 
@@ -69,7 +70,9 @@ const Mgt2eCharGen = () => {
 
             const stateWithMethods = addMethodsToGameState(state);
             const ids = stateWithMethods.getPlayerIds()
+            console.log('state changed', ids, JSON.parse(JSON.stringify(stateWithMethods)))
             dispatch(fetchModelDataArray({ids, modelName: 'users'}));
+            dispatch(fetchCharacters({gameId: id}));
 
             setGameState(stateWithMethods);
           });

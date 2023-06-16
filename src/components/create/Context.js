@@ -27,8 +27,7 @@ const Context = ({ gameId }) => {
       dispatch(fetchUniverseSubdivisions({universeId: context.universe.id, modelName: 'subdivision'}));
       
     } 
-
-    }, [gameId, context?.universe?.id]);
+    }, [gameId, JSON.stringify(context?.universe)]);
 
   const showOverall = display.focus === 'overall' && display.scale === 'game' && display.type === 'universe'
   const showSubdivisionForm = display.type === 'subdivision'
@@ -39,7 +38,8 @@ const Context = ({ gameId }) => {
   return (
     <div>
       {
-        showOverall ? <Overall game={gameData} context={context} setDisplay={setDisplay} display={display} />
+        !context?.universe?.id ? <div>Loading...</div>
+        : showOverall ? <Overall game={gameData} context={context} setDisplay={setDisplay} display={display} />
         : showSubdivisionForm ? <Subdivision game={gameData} context={context.universe} setDisplay={setDisplay} display={display} />  
         : showFeatureForm ? <Feature game={gameData} context={context.universe} setDisplay={setDisplay} display={display} />  
       : <Game game={gameData} context={context.universe} setDisplay={setDisplay} />

@@ -11,6 +11,7 @@ export const mergeIntoArray = (array, data) => {
 }
 
 export const mergeArrays = (array, data) => {
+    if(!data || !data.find) throw new Error(`mergeArrays: data is undefined: ${JSON.stringify(data)}}`);
     const merged = (array || []).map((item) => {
         const match = data.find((d) => d.id === item.id);
         return match ? { ...item, ...match } : item;

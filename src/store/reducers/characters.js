@@ -2,7 +2,7 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  updatePortraitSrc, fetchCharacter, createPortrait, fetchControlledCharacters, fetchModels, fetchModelData, addModel, fetchAssocData, fetchModelContext, fetchUniverseSubdivisions
+  fetchCharacters, updatePortraitSrc, fetchCharacter, createPortrait, fetchControlledCharacters, fetchModels, fetchModelData, addModel, fetchAssocData, fetchModelContext, fetchUniverseSubdivisions
 } from '../actions/models';
 import { HYDRATE } from "next-redux-wrapper";
 import { mergeIntoArray, mergeArrays } from '../../utils/storeMethods';
@@ -36,7 +36,7 @@ const contextsSlice = createSlice({
       
     })
     .addCase(addModel.fulfilled, (state, action) => {
-      if(action.meta.arg.modelName === 'pdf' || action.meta.arg.modelName === 'cc'){
+      if(action.meta.arg.modelName === 'pdf' || action.meta.arg.modelName === 'cc' || action.meta.arg.modelName === 'ss'){
 
         state.characters = [action.payload, ...state.characters ];
         const uniqueCharacters = state.characters.filter((character, index, self) =>
@@ -51,7 +51,7 @@ const contextsSlice = createSlice({
     .addCase(fetchCharacter.fulfilled, (state, action) => {
       const { portraits, characters } = action.payload;
 
-      console.log('fetchCharacter.fulfilled action', action, JSON.parse(JSON.stringify(state)));
+      //console.log('fetchCharacter.fulfilled action', action, JSON.parse(JSON.stringify(state)));
         state.characters = mergeArrays(state.characters, characters);
         state.portraits = mergeArrays(state.portraits, portraits);
         state.error = null;
@@ -60,7 +60,16 @@ const contextsSlice = createSlice({
     .addCase(fetchControlledCharacters.fulfilled, (state, action) => {
       const { portraits, characters } = action.payload;
 
-      console.log('fetchControlledCharacters.fulfilled action', action, JSON.parse(JSON.stringify(state)));
+      //console.log('fetchControlledCharacters.fulfilled action', action, JSON.parse(JSON.stringify(state)));
+        state.characters = mergeArrays(state.characters, characters);
+        state.portraits = mergeArrays(state.portraits, portraits);
+        state.error = null;
+      
+    })
+    .addCase(fetchCharacters.fulfilled, (state, action) => {
+      const { portraits, characters } = action.payload;
+
+      //console.log('fetchCharacters.fulfilled action', action, JSON.parse(JSON.stringify(characters)));
         state.characters = mergeArrays(state.characters, characters);
         state.portraits = mergeArrays(state.portraits, portraits);
         state.error = null;

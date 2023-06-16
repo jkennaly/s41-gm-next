@@ -5,15 +5,13 @@ import { useAuth } from '../auth/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '@/store/reducers/auth';
 import { selectUserData } from '@/store/selectors/users';
+import { selectUserIsGm } from '@/store/selectors/games';
 import { fetchAssocData } from '@/store/actions/models';
 import { Button } from './Button';
+import { useRouter } from 'next/router';
 import logo from '@/../public/S41.svg'
 
 
-const navigation = [
-  { name: 'Dashboard', href: '/', current: true },
-  { name: 'Games', href: '/games', current: false },
-]
 const userNavigation = [
   { name: 'Settings', href: '/user/settings' },
   { name: 'Sign out', href: '#', auth: 'logout' },
@@ -28,6 +26,7 @@ export default function Example() {
   const [authId, setAuthId] = useState(0)
   const auth = useAuth();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     if(auth.userId()) setAuthId(auth.userId())
@@ -41,9 +40,21 @@ export default function Example() {
     }
   }, [dispatch, authId]);
 
+  const navigation = [
+    { 
+      name: 'Dashboard', 
+      href: '/',
+      current: function() { return router.pathname === this.href; } 
+    },
+    { 
+      name: 'Games', 
+      href: '/games',
+      current: function() { return router.pathname === this.href; } 
+    },
+  ]
 
   const userData = useSelector((state) => selectUserData(state, authId));
-  const showGmButton = userData && !userData.gm
+  const showGmButton = !useSelector((state) => selectUserIsGm(state, authId));
   return (
     <>
       <div className="min-h-full relative z-50 top-0">
@@ -67,12 +78,12 @@ export default function Example() {
                             key={item.name}
                             href={item.href}
                             className={classNames(
-                              item.current
+                              item.current()
                                 ? 'bg-gray-900 text-white'
                                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                               'rounded-md px-3 py-2 text-sm font-medium'
                             )}
-                            aria-current={item.current ? 'page' : undefined}
+                            aria-current={item.current() ? 'page' : undefined}
                           >
                             {item.name}
                           </a>
@@ -158,10 +169,10 @@ export default function Example() {
                       as="a"
                       href={item.href}
                       className={classNames(
-                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        item.current() ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'block rounded-md px-3 py-2 text-base font-medium'
                       )}
-                      aria-current={item.current ? 'page' : undefined}
+                      aria-current={item.current() ? 'page' : undefined}
                     >
                       {item.name}
                     </Disclosure.Button>

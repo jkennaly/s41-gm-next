@@ -23,6 +23,8 @@ const TraitContent = ({ fields, append, remove, gameId, character, fieldName, se
 
   const onSubmit = (data) => {
     append({ trait: getValues(fieldName) })
+    setValue(fieldName, '');
+
     handleModalClose();
   }
 

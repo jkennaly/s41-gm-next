@@ -1,17 +1,21 @@
 import StatusLine from './StatusLine'
 import statuses from './statuses'
+import { useSelector } from 'react-redux';
+import { selectUserData } from '@/store/selectors/users';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function GameStatus({ game, players, sessions, gm }) {
+  const userData = useSelector((state) => selectUserData(state, game.gmId)) || {}
+
   return (
     <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
       <StatusLine label="Game" value={game.name} />
       {players && players.map(player => <StatusLine label="Player" value={player.nickname} />)}
       {sessions.map(session => <StatusLine label="Session" value={session.name} />)}
-      <StatusLine label="Game Master" value={game.gmId} />
+      <StatusLine label="Game Master" value={userData.username || game.gmId} />
       <div className="flex justify-between gap-x-4 py-3">
         <dt className="text-gray-500">Status</dt>
         <dd className="flex items-start gap-x-2">

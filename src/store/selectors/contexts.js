@@ -10,6 +10,7 @@ export const selectContextData = createSelector(
   [selectAllContextData, (_, gameId) => gameId],
   (contexts, gameId) => {
     const universe = contexts.universe.find((ctx) => ctx.gameId === gameId)
+    if(!universe) return { universe: {}, subdivisions: [], features: []};
     const subdivisions = contexts.subdivisions && contexts.subdivisions.filter((ctx) => ctx.universeId === universe.id) || [];
     const features = contexts.features && contexts.features.filter((ctx) => ctx.universeId === universe.id) || [];
     return { universe, subdivisions, features }
@@ -22,7 +23,8 @@ export const selectCampaignWorlds = createSelector(
   (contexts, gameId) => {
     console.log('selectCampaignWorlds contexts', gameId, contexts);
     if(!gameId || !contexts.universe || !contexts.universe.length) return [];
-    const universe = contexts.universe.find((ctx) => ctx.gameId === gameId)
+    const universe = contexts.universe.find((ctx) => ctx.gameId === gameId) 
+    if(!universe) return [];
     const subdivisions = contexts.subdivisions && contexts.subdivisions.filter((ctx) => ctx.universeId === universe.id && (ctx.scale && ctx.scale.toLowerCase() === 'world')) || [];
     return subdivisions
   }

@@ -14,8 +14,6 @@ const attr = {
     intelligence: 'Intelligence',
     education: 'Education',
     socialStanding: 'Social Standing',
-
-
 }
 const baseAttr = {
     strength: '',
@@ -33,6 +31,7 @@ const CoreCharacteristicsForm = ({ userData, setActiveSection, gameState, gameId
   
     const currentCc = character?.coreCharacteristics || {};
     const currentPdf = character?.personalDataFile || {};
+    const currentSkills = character?.skills || [];
     const { register, handleSubmit, setValue, getValues, control, watch, reset } = useForm();
     //set the default values for the form from the currentCc
     const portraitSrc = useSelector((state) => selectImgSrcForCharacter(state, character?.id));

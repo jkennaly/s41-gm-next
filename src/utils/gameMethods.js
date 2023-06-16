@@ -14,4 +14,7 @@ export function determineCurrentLeader(gameState) {
   export const getPlayerIds = (gameState) => {
     return Object.values(gameState.players).filter(Boolean).map(player => player.id);
   };
+  export const getCharacterIds = (gameState) => {
+    return Object.values([...gameState.npcs, ...gameState.pcs]).filter(Boolean).map(char => char.id);
+  };
     

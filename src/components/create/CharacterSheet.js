@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Overview from './sections/Overview'
 import PersonalDataFileForm from './entry/pdfForm'
 import CoreCharacteristicsForm from './entry/ccForm';
+import LifePathForm from './entry/lpForm';
 import getStatusOfSection from '@/utils/getStatusOfSection';
 
 export default function CharacterSheet({ userData, character, gameState, room }) {
@@ -22,6 +23,7 @@ export default function CharacterSheet({ userData, character, gameState, room })
         {character && <div className="min-w-0 flex-1">
       { (activeSection === 'PersonalDataFile' || activeSection === 'PDF') && gameState?.dbGame?.id && character?.id ? <PersonalDataFileForm gameId={gameState?.dbGame?.id} setActiveSection={setActiveSection} characterId={character?.id} />
           : (activeSection === 'CoreCharacteristics' || activeSection === 'CC') && gameState?.dbGame?.id && character?.id ? <CoreCharacteristicsForm userData={userData} room={room} gameState={gameState} setActiveSection={setActiveSection} characterId={character?.id} />
+          : (activeSection === 'LifePath' || activeSection === 'LP') && gameState?.dbGame?.id && character?.id ? <LifePathForm userData={userData} room={room} gameState={gameState} setActiveSection={setActiveSection} characterId={character?.id} />
           : <Overview 
             handleSectionClick={handleSectionClick} 
             character={character}

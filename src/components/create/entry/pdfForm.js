@@ -91,6 +91,8 @@ const PersonalDataFileForm = ({ setActiveSection, characterId, gameId }) => {
     };
 
     const handleAddPortrait = () => {
+        dispatch(addModel({modelData: formData, modelName: 'pdf', characterId: character.id}, 'pdf'))
+    
         setModalSubmit('portrait')
 
         setModalOpen(true);

@@ -10,3 +10,9 @@ export const selectGameData = createSelector(
   [selectAllGameData, (_, gameId) => gameId],
   (games, gameId) => games.find((game) => game.id === gameId)
 );
+
+// This selector takes a game id as an argument and returns the game data for that id.
+export const selectUserIsGm = createSelector(
+  [selectAllGameData, (_, userId) => userId],
+  (games, userId) => games.some((game) => game.gmId === userId)
+);

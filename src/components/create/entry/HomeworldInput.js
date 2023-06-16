@@ -6,6 +6,7 @@ const HomeworldInput = ({ register, gameId, setValue }) => {
   const campaignWorlds = useSelector((state) => selectCampaignWorlds(state, gameId));
   
   const handleRandomClick = () => {
+    if(!campaignWorlds || !campaignWorlds.length) return;
     const randomIndex = Math.floor(Math.random() * campaignWorlds.length);
     setValue('homeworld', campaignWorlds[randomIndex].name);
   };
