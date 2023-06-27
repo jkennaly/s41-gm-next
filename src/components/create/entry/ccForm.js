@@ -34,7 +34,7 @@ const CoreCharacteristicsForm = ({ userData, setActiveSection, gameState, gameId
     const currentSkills = character?.skills || [];
     const { register, handleSubmit, setValue, getValues, control, watch, reset } = useForm();
     //set the default values for the form from the currentCc
-    const portraitSrc = useSelector((state) => selectImgSrcForCharacter(state, character?.id));
+    const [portraitSrc, portraitId] = useSelector((state) => selectImgSrcForCharacter(state, character?.id));
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
@@ -159,12 +159,21 @@ const CoreCharacteristicsForm = ({ userData, setActiveSection, gameState, gameId
         setRollResults(updatedRollResults);
     }
     
-
     useEffect(() => {
-        setValue('strength', currentCc.strength);
-
-
-    }, [])
+      setValue('strength', currentCc.strength);
+      setValue('dexterity', currentCc.dexterity);
+      setValue('endurance', currentCc.endurance);
+      setValue('intelligence', currentCc.intelligence);
+      setValue('education', currentCc.education);
+      setValue('socialStanding', currentCc.socialStanding);
+    }, [
+      currentCc.strength,
+      currentCc.dexterity,
+      currentCc.endurance,
+      currentCc.intelligence,
+      currentCc.education,
+      currentCc.socialStanding,
+    ])
     const currentRolls = (gameState?.players?.[userData.id]?.rollResults || [])
     useEffect(() => {
         setRollResults(currentRolls)

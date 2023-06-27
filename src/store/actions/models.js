@@ -68,11 +68,50 @@ import { api } from '../../api';
       }
     }
   );
+  
+
+  export const changeCharacteristic = createAsyncThunk(
+    `model/changeCharacteristic`,
+    async ({ characterId, char, amount }, { rejectWithValue }) => {
+      try {
+        const response = await api.put(`/games/mgt2e/chargen/${characterId}/cc/${char}/${amount}`);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  
+
+  export const updateLifePath = createAsyncThunk(
+    `model/updateLifePath`,
+    async ({ characterId }, { rejectWithValue }) => {
+      try {
+        const response = await api.get(`/games/mgt2e/chargen/${characterId}/lp`);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  
+
+  export const updateCurrentTerm = createAsyncThunk(
+    `model/updateCurrentTerm`,
+    async ({ characterId, field, term, changes }, { rejectWithValue }) => {
+      try {
+        const response = await api.put(`/games/mgt2e/chargen/${characterId}/lp/${term}/${field}`, changes);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
 
   export const addModel = createAsyncThunk(
     `model/addModel`,
     async ({ modelData, modelName, characterId}, { rejectWithValue }) => {
-      if(['pdf', 'cc', 'ss'].includes(modelName)) {
+      if(['pdf', 'cc', 'ss', 'lp'].includes(modelName)) {
         try {
           const response = await api.post(`/games/mgt2e/chargen/${characterId}/${modelName}`, modelData);
           return response.data;
@@ -104,12 +143,26 @@ import { api } from '../../api';
     }
   );
 
+  export const createAssoc = createAsyncThunk(
+    `model/createAssoc`,
+    async ({ modelData, modelName, characterId}, { rejectWithValue }) => {
+      try {
+        const response = await api.post(`/games/mgt2e/chargen/${characterId}/${modelName}`, modelData);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  
   export const updatePortraitSrc = createAsyncThunk(
     `model/updatePortraitSrc`,
     async ({ portraitId }, { rejectWithValue }) => {
+      console.log('updatePortraitSrc portraitId', {portraitId})
         try {
-          const { data: portrait } = await api.get(`/portraits/update/${portraitId}`);
-          return portrait;
+            const { data: portrait } = await api.get(`/portraits/update/${portraitId}`);
+            return portrait;
+          
         } catch (error) {
           return rejectWithValue(error.response.data);
         }
@@ -122,13 +175,8 @@ import { api } from '../../api';
       try {
         const { data: characters } = await api.get(`/games/mgt2e/chargen/pc/${gameId}`);
         const pdfs = characters.map(c => c.personalDataFile)
-        const portraitIds = pdfs
-          .filter(Boolean)
-          .map(p => p.currentPortraitId)
-          .filter(Boolean)
         //console.log('fetchControlledCharacters', {gameId, portraitIds, pdfs})
-        const portraitResponses = await Promise.all(portraitIds.map(id => api.get(`/portraits/${id}`)));
-        const portraits = portraitResponses.map(r => r.data);
+        const portraits = []
         //console.log('fetchControlledCharacters', {characters, portraitIds, portraits})
         return {characters, portraits};
       } catch (error) {
@@ -143,13 +191,8 @@ import { api } from '../../api';
       try {
         const { data: characters } = await api.get(`/games/mgt2e/chargen/available/${gameId}`);
         const pdfs = characters.map(c => c.personalDataFile)
-        const portraitIds = pdfs
-          .filter(Boolean)
-          .map(p => p.currentPortraitId)
-          .filter(Boolean)
-        //console.log('fetchCharacters', {gameId, portraitIds, pdfs})
-        const portraitResponses = await Promise.all(portraitIds.map(id => api.get(`/portraits/${id}`)));
-        const portraits = portraitResponses.map(r => r.data);
+        //select expired portraits
+        const portraits = []
         //console.log('fetchCharacters', {characters, portraitIds, portraits})
         return {characters, portraits};
       } catch (error) {
@@ -165,13 +208,7 @@ import { api } from '../../api';
         const { data: character } = await api.get(`/games/mgt2e/chargen/inclusive/${characterId}`);
         const characters = [character];
         const pdfs = characters.map(c => c.personalDataFile)
-        const portraitIds = pdfs
-          .filter(Boolean)
-          .map(p => p.currentPortraitId)
-          .filter(Boolean)
-        //console.log('fetchCharacter', {characterId, portraitIds, pdfs})
-        const portraitResponses = await Promise.all(portraitIds.map(id => api.get(`/portraits/${id}`)));
-        const portraits = portraitResponses.map(r => r.data);
+        const portraits = []
         //console.log('fetchCharacter', {characters, portraitIds, portraits})
         return {characters, portraits};
       } catch (error) {

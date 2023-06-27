@@ -13,5 +13,10 @@ export const rollMgt2eChargen = ({ roomId, game, room, type, msg }) => {
     console.log('rollMgt2eChargen', roomId, game, room, type, msg)
     
     const resp = room.send(msg, { roomId });
-    console.log('moveRoom resp', resp)
+    console.log('rollMgt2eChargen resp', resp)
+}
+
+export const rollEnterMessage = ({ roomId, room, msg, options }) => {
+    console.log('rollEnterMessage', roomId, msg)
+    return room.send(msg, { roomId, options });
 }

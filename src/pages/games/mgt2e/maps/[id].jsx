@@ -39,8 +39,9 @@ const Mgt2eCharGen = () => {
   const [room, setRoom] = useState(null)
   const [gameState, setGameState] = useState(null)
   const auth = useAuth();
-  const { id: ids } = router.query; // get the dynamic route param
-    const id = ids && ids.length ? parseInt(ids[0], 10) : 0;
+  const { id: mapIds, gameId: gameIds } = router.query; // get the dynamic route param
+  const id = gameIds && gameIds.length ? parseInt(gameIds[0], 10) : 0;
+  const mapId = mapIds && mapIds.length ? parseInt(mapIds[0], 10) : 0;
     
     const dispatch = useDispatch();
     const gameData = useSelector((state) => selectGameData(state, id));
@@ -70,7 +71,7 @@ const Mgt2eCharGen = () => {
 
             const stateWithMethods = addMethodsToGameState(state);
             const ids = stateWithMethods.getPlayerIds()
-            console.log('state changed', ids, JSON.parse(JSON.stringify(stateWithMethods)))
+            //console.log('state changed', ids, JSON.parse(JSON.stringify(stateWithMethods)))
             dispatch(fetchModelDataArray({ids, modelName: 'users'}));
             dispatch(fetchCharacters({gameId: id}));
 
@@ -111,7 +112,7 @@ const Mgt2eCharGen = () => {
 
   const userData = useSelector((state) => selectUserData(state, authId));
   if (!gameData) return <div>Loading...</div>; // Loading state
-  //console.log('Current state of Game', JSON.parse(JSON.stringify(gameState)))
+  console.log('Current state of Game on Map', JSON.parse(JSON.stringify(gameState)))
   return (
     <>
       <Head>
@@ -132,12 +133,7 @@ const Mgt2eCharGen = () => {
         gameData={gameData}
       />
     </div>
-    <Dashboard 
-      controlledCharacters={controlledCharacters} 
-      gameState={gameState || {}} 
-      userData={userData} 
-      room={room} 
-    />
+    <div>Map Here</div>
 
       </main>
       <Footer />

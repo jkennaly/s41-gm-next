@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import statuses from '../../lobby/statuses';
 import getStatusOfSection from '@/utils/getStatusOfSection';
 import { useSelector } from 'react-redux';
 import { selectCharacter } from '@/store/selectors/characters';
+import { updateLifePath } from '@/store/actions/models';
+import { useDispatch } from 'react-redux';
 
 const LifePathCard = ({ userData, gameState, clickHandler, characterId }) => {
+    const dispatch = useDispatch();
     const selectedCharacter = useSelector((state) => selectCharacter(state, characterId));
     const lifePaths = selectedCharacter?.lifePaths;
     const status = getStatusOfSection('LifePath')(selectedCharacter);
     const last = lifePaths.length - 1;
+    const incompletePaths = lifePaths
+        .filter((lp) => !lp.completed && !lp.careerTerms && !lp.preCareerTerms)
+    
+    useEffect(() => {
+        dispatch(updateLifePath({characterId}));
+    }, [incompletePaths.length]);
+        
+
+    //console.log('LifePathCard', selectedCharacter, { lifePaths, status, last });
 
     return (
         <li onClick={clickHandler} className={`overflow-hidden rounded-xl border ${status !== 'disabled' ? `cursor-pointer` : ''} ${statuses[status]}`}>

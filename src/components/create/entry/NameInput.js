@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const NameInput = ({ register, setValue }) => {
+const NameInput = ({ register, setValue, name }) => {
 
   const handleSuggestClick = async (e) => {
     e.preventDefault();
@@ -20,7 +20,8 @@ const NameInput = ({ register, setValue }) => {
       <div className="mt-1 sm:mt-0 sm:col-span-2 flex items-center">
         <input
           {...register('name', { required: true })}
-          id="name"
+          value={name}
+          onChange={((e) => setValue('name', e.target.value))}
           name="name"
           type="text"
           className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md mr-4"

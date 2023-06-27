@@ -1,6 +1,7 @@
 // src/redux/selectors/characters.js
 
 import { createSelector } from '@reduxjs/toolkit';
+import { secondsUntilExpiry } from '@/utils/gameMethods';
 
 // This is a simple selector that returns all the game data.
 export const selectAllCharacterData = (state) => state.characters.characters;
@@ -51,6 +52,16 @@ export const selectPortraitForCharacter = createSelector(
   }
 )
 
+export const selectExpiredPortraitIds = createSelector(
+  [selectAllPortraitData],
+  (portraits = []) => {
+    const portraitIds = portraits
+      .filter((ctx) => secondsUntilExpiry(ctx.imageUrl) < 0)
+      .map((ctx) => ctx.id)
+    return portraitIds
+  }
+)
+
 export const selectImgSrcForCharacter = createSelector(
   [selectAllCharacterData, selectAllPortraitData, (_, characterId) => characterId],
   (characters = [], portraits = [], characterId) => {
@@ -59,7 +70,8 @@ export const selectImgSrcForCharacter = createSelector(
     const pdf = character.personalDataFile || {}
     const portraitId = pdf.currentPortraitId || {}
     const portrait = portraits.find((ctx) => ctx.id === portraitId) || {}
-    console.log('selectPortraitForCharacter', portrait, characters, portraits, characterId, character)
-    return portrait.imageUrl
+    //console.log('selectPortraitForCharacter', portrait, characters, portraits, characterId, character)
+    const imgUrl = portrait.imageUrl
+    return [imgUrl, portraitId]
   }
 )

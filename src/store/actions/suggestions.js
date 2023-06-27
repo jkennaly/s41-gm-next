@@ -1,4 +1,4 @@
-// src/store/actions/models.js
+// src/store/actions/suggestions.js
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../api';

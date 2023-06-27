@@ -15,7 +15,7 @@ const PersonalDataFileForm = ({ setActiveSection, characterId, gameId }) => {
     const currentPdf = character.personalDataFile || {};
     const { register, handleSubmit, setValue, getValues, control } = useForm();
     //set the default values for the form from the currentPdf
-    const portraitSrc = useSelector((state) => selectImgSrcForCharacter(state, character.id));
+    const [portraitSrc, portraitId] = useSelector((state) => selectImgSrcForCharacter(state, character.id));
   
 
     const traitField = useFieldArray({
@@ -201,7 +201,7 @@ handleModalClose={handleModalClose}
         </div>
         <HomeworldInput register={register} gameId={gameId} setValue={setValue} />
         <div className="space-y-6 sm:space-y-5">
-          <NameInput register={register} setValue={setValue} />
+          <NameInput register={register} setValue={setValue} name={''} />
 
           <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Title</label>

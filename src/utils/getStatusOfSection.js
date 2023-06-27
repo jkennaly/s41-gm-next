@@ -24,7 +24,8 @@ const getStatusOfSection = (section) => {
         case 'LP':
         case 'LifePath': {
           const ccStatus = getStatusOfSection('CoreCharacteristics')(character);
-          if(getStatusOfSection('CoreCharacteristics')(character) !== 'completed') return 'disabled';
+          //console.log('ccStatus', ccStatus, character);
+          if(ccStatus !== 'completed') return 'disabled';
           const lifePaths = character?.lifePaths;
           const anyLifePathFilled = lifePaths?.length > 0;
           const allLifePathCompleted = anyLifePathFilled  && lifePaths?.every(path => path.careerTerm !== null && path.preCareerTerm !== null && path.musteringOut !== null);
