@@ -107,6 +107,19 @@ import { api } from '../../api';
       }
     }
   );
+  
+
+  export const updateSubdivision = createAsyncThunk(
+    `model/updateSubdivision`,
+    async ({ subdivisionId, changes }, { rejectWithValue }) => {
+      try {
+        const response = await api.put(`/subdivision/${subdivisionId}`, changes);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
 
   export const addModel = createAsyncThunk(
     `model/addModel`,

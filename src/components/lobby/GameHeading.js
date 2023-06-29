@@ -33,6 +33,9 @@ const GameHeading = ({ gameTitle, gameStatus, gameDescription, userData, gameDat
       Join the Game
     </Button>}
     </>}
+    {userIsGm && <Button href={`/games/mgt2e/campaign/${gameData.id}`} className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
+      Campaign Dashboard
+    </Button>}
     <div className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
       {gameStatus}
     </div>

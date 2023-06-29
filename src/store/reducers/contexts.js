@@ -2,7 +2,7 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  fetchModels, fetchModelData, addModel, fetchAssocData, fetchModelContext, fetchUniverseSubdivisions
+  updateSubdivision, fetchModels, fetchModelData, addModel, fetchAssocData, fetchModelContext, fetchUniverseSubdivisions
 } from '../actions/models';
 import { HYDRATE } from "next-redux-wrapper";
 
@@ -17,6 +17,17 @@ const contextsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    .addCase(updateSubdivision.fulfilled, (state, action) => {
+        state.contexts.subdivisions = [action.payload, ...state.contexts.subdivisions ];
+        const uniqueSubdivisions = state.contexts.subdivisions.filter((subdivision, index, self) =>
+          index === self.findIndex((t) => (
+            t.id === subdivision.id
+          ))
+        )
+        state.contexts.subdivisions = uniqueSubdivisions;
+        state.error = null;
+      
+    })
     .addCase(fetchModelContext.fulfilled, (state, action) => {
       if(action.meta.arg.modelName === 'games'){
         const universe = !state.contexts?.universe?.length ? [] : [ ...state.contexts.universe];
@@ -35,7 +46,7 @@ const contextsSlice = createSlice({
     })
     .addCase(addModel.fulfilled, (state, action) => {
       if(action.meta.arg.modelName === 'subdivision'){
-        state.contexts.subdivisions = [...state.contexts.subdivisions, action.payload];
+        state.contexts.subdivisions = [action.payload, ...state.contexts.subdivisions ];
         const uniqueSubdivisions = state.contexts.subdivisions.filter((subdivision, index, self) =>
           index === self.findIndex((t) => (
             t.id === subdivision.id
@@ -45,7 +56,7 @@ const contextsSlice = createSlice({
         state.error = null;
       }
       if(action.meta.arg.modelName === 'feature'){
-        state.contexts.features = [...state.contexts.features, action.payload];
+        state.contexts.features = [action.payload, ...state.contexts.features ];
         const uniqueFeatures = state.contexts.features.filter((feature, index, self) =>
           index === self.findIndex((t) => (
             t.id === feature.id

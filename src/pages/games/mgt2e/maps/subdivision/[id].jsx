@@ -1,25 +1,26 @@
 import Head from 'next/head';
-import AppShell from '../../../../components/AppShell';
-import { Footer } from '../../../../components/Footer';
+import AppShell from '@/components/AppShell';
+import { Footer } from '@/components/Footer';
 
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../../../auth/auth';
+import { useAuth } from '@/auth/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import Table from '../../../../components/dice/Table';
-import ActionBar from '../../../../components/dice/ActionBar';
-import ScoreBoard from '../../../../components/dice/ScoreBoard';
-import GameHeading from '../../../../components/lobby/GameHeading';
-import GameStats from '../../../../components/lobby/GameStats';
-import CardList from '../../../../components/cards/CardList';
-import Card from '../../../../components/cards/CharacterCreate';
+import Table from '@/components/dice/Table';
+import ActionBar from '@/components/dice/ActionBar';
+import ScoreBoard from '@/components/dice/ScoreBoard';
+import GameHeading from '@/components/lobby/GameHeading';
+import GameStats from '@/components/lobby/GameStats';
+import CardList from '@/components/cards/CardList';
+import Card from '@/components/cards/CharacterCreate';
 import Dashboard from '@/components/create/Dashboard';
-import { fetchModelDataArray, fetchControlledCharacters, fetchCharacters } from '../../../../store/actions/models';
-import { selectGameData } from '../../../../store/selectors/games';
+import MapOverview from '@/components/context/map/subsector/overview';
+import { fetchModelDataArray, fetchControlledCharacters, fetchCharacters } from '@/store/actions/models';
+import { selectGameData } from '@/store/selectors/games';
 import { selectUserData } from '@/store/selectors/users';
 import { getPlayerIds, getCharacterIds  } from '@/utils/gameMethods';
-import { selectControlled } from '@/store/selectors/characters';
+import { selectSubdivision } from '@/store/selectors/contexts';
 
 import * as Colyseus from "colyseus.js"
 
@@ -33,26 +34,22 @@ function addMethodsToGameState(gameState) {
   };
 }
 
-const Mgt2eCharGen = () => {
+const MapDisp = () => {
   const router = useRouter();
   const [authId, setAuthId] = useState(0)
   const [room, setRoom] = useState(null)
   const [gameState, setGameState] = useState(null)
   const auth = useAuth();
-  const { id: mapIds, gameId: gameIds } = router.query; // get the dynamic route param
-  const id = gameIds && gameIds.length ? parseInt(gameIds[0], 10) : 0;
-  const mapId = mapIds && mapIds.length ? parseInt(mapIds[0], 10) : 0;
-    
-    const dispatch = useDispatch();
-    const gameData = useSelector((state) => selectGameData(state, id));
-    const nextPlayer = useSelector((state) => selectUserData(state, gameState && gameState.currentTurn));
+  const { id: subdivisionIds } = router.query; // get the dynamic route param
+  const subdivisionId = subdivisionIds && subdivisionIds.length ? parseInt(subdivisionIds[0], 10) : 0;
+      
+  const dispatch = useDispatch();
+  const subdivision = useSelector((state) => selectSubdivision(state, subdivisionId));
+  const id = subdivision && subdivision.gameId ? subdivision.gameId : 0;
+  const gameData = useSelector((state) => selectGameData(state, id));
+  
 
-    const controlledCharacters = useSelector((state) => selectControlled(state, authId));
-  //updatee the characters controlled by the user
-  useEffect(() => {
-    if(id) dispatch(fetchControlledCharacters({gameId: id}));
-    
-  }, [id])
+
 
     
   // Fetch game data when component mounts or id changes
@@ -133,7 +130,7 @@ const Mgt2eCharGen = () => {
         gameData={gameData}
       />
     </div>
-    <div>Map Here</div>
+    <MapOverview subdivision={subdivision} />
 
       </main>
       <Footer />
@@ -143,4 +140,4 @@ const Mgt2eCharGen = () => {
   );
 };
 
-export default Mgt2eCharGen;
+export default MapDisp;

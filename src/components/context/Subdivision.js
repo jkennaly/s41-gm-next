@@ -9,7 +9,7 @@ const SubdivisionLayout = ({ game, universe, parent, subdivision, display, setDi
 
   const openMap = async (event) => {
     event.preventDefault();
-    router.push(`/games/mgt2e/maps/${subdivision.id}`);
+    router.push(`/games/mgt2e/maps/subdivision/${subdivision.id}`);
   };
 
 const addSubDisplay = {
